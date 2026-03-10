@@ -141,6 +141,21 @@ function getTechIconUrl(tech: string) {
     };
   }
 
+  if (normalized.includes("aws")) {
+    return {
+      light: "https://cdn.simpleicons.org/amazonwebservices",
+      dark: "https://cdn.simpleicons.org/amazonwebservices/FF9900",
+      fallbackSrc: "/aws_logo.svg",
+    };
+  }
+
+  if (normalized.includes("docker")) {
+    return {
+      light: "https://cdn.simpleicons.org/docker",
+      dark: "https://cdn.simpleicons.org/docker/2496ED",
+    };
+  }
+
   return {
     light: "https://cdn.simpleicons.org/circle",
     dark: "https://cdn.simpleicons.org/circle/ffffff",
@@ -297,6 +312,7 @@ export default function HomePage() {
                           alt={tech}
                           lightSrc={iconSources.light}
                           darkSrc={iconSources.dark}
+                          fallbackSrc={iconSources.fallbackSrc}
                           width={24}
                           height={24}
                           className={TECHNOLOGY_IMAGE_CLASS}
@@ -316,3 +332,4 @@ export default function HomePage() {
     </section>
   );
 }
+

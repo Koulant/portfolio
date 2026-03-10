@@ -1,4 +1,4 @@
-export type SocialLink = {
+﻿export type SocialLink = {
   href: string;
   label: string;
 };
@@ -18,24 +18,31 @@ export type Profile = {
 export const profile: Profile = {
   name: "Anton Koulikov",
   role: "Software Engineer",
-  roles: ["Software Engineer", "Backend Engineer", "Full-Stack Builder", "System Designer"],
+  roles: [
+    "Software Engineer",
+    "Building Reliable Systems",
+    "Shipping Full-Stack Solutions",
+  ],
   location: "Calgary, Alberta, Canada",
   timezone: "America/Edmonton",
   portraitUrl: "/portrait.jpg",
   intro: [
-    "I am a software engineer with production experience building backend systems for fintech operations in regulated environments.",
-    "My core stack includes Python (Django), Go, JavaScript, and PostgreSQL. I am now refreshing my frontend skills with modern React and Next.js.",
+    "Software Engineer and full-stack builder with a focus on reliable fintech systems and measurable business impact. Based in Calgary, Alberta.",
+    "I care about turning complex operational problems into practical software that is accurate, auditable, and dependable.",
+    "Currently sharpening my frontend skills with React and Next.js to build cleaner end-to-end product experiences.",
   ],
   techStack: [
-    "Next.js",
-    "React",
-    "TypeScript",
-    "JavaScript",
     "Python",
     "Django",
     "Go",
     "PostgreSQL",
+    "Next.js",
+    "TypeScript",
+    "React",
+    "JavaScript",
     "Tailwind CSS",
+    "AWS",
+    "Docker",
     "shadcn/ui",
   ],
   socials: [
