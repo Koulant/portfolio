@@ -14,24 +14,28 @@ export function RoleScroller({ roles }: RoleScrollerProps) {
   const transitionMs = 420;
   const holdMs = 1800;
   const safeRoles = useMemo(() => roles.filter(Boolean), [roles]);
+  const safeRoleCount = safeRoles.length;
+  const safeRolesKey = safeRoles.join("|");
 
   useEffect(() => {
-    if (safeRoles.length <= 1) return;
-    let swapTimer: ReturnType<typeof setTimeout> | null = null;
+    if (safeRoleCount <= 1) return;
+    let cycleTimer: ReturnType<typeof setTimeout> | null = null;
 
-    const interval = setInterval(() => {
+    const cycle = () => {
       setPhase("hide");
-      swapTimer = setTimeout(() => {
-        setIndex((current) => (current + 1) % safeRoles.length);
+      cycleTimer = setTimeout(() => {
+        setIndex((current) => (current + 1) % safeRoleCount);
         setPhase("show");
+        cycleTimer = setTimeout(cycle, holdMs);
       }, transitionMs);
-    }, holdMs + transitionMs);
+    };
+
+    cycleTimer = setTimeout(cycle, holdMs);
 
     return () => {
-      clearInterval(interval);
-      if (swapTimer) clearTimeout(swapTimer);
+      if (cycleTimer) clearTimeout(cycleTimer);
     };
-  }, [safeRoles.length, transitionMs, holdMs, index]);
+  }, [safeRoleCount, safeRolesKey, transitionMs, holdMs]);
 
   if (safeRoles.length === 0) {
     return null;
