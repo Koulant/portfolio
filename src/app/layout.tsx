@@ -39,7 +39,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="mx-auto w-full max-w-4xl flex-1 px-4 pt-6 pb-10 sm:px-6 sm:pt-8 sm:pb-12">
+            <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-6 sm:px-6 sm:py-8">
               {children}
             </main>
             <SiteFooter />

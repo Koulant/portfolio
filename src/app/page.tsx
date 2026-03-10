@@ -1,13 +1,4 @@
-import {
-  CheckCircle2,
-  CircleX,
-  Clock3,
-  FileText,
-  Github,
-  Linkedin,
-  Mail,
-  MapPin,
-} from "lucide-react";
+import { Clock3, FileText, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { profile } from "@/data/profile";
 
 export const metadata: Metadata = {
-  title: "About | Anton Koulikov",
+  title: "About",
 };
 
 const SOCIAL_BUTTON_CLASS = "gap-2 px-3 h-11";
@@ -175,7 +166,7 @@ export default function HomePage() {
   const stack = [...new Set(profile.techStack)].filter(Boolean).sort((a, b) => a.localeCompare(b));
 
   return (
-    <section className="space-y-8 text-left">
+    <section className="space-y-6 text-left">
       <Card>
         <CardContent className="space-y-4 pt-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -207,20 +198,6 @@ export default function HomePage() {
                       <Clock3 className="text-muted-foreground size-3.5" />
                     </span>
                     <CurrentTime timezone={profile.timezone} />
-                  </span>
-                  <span className={METADATA_ITEM_CLASS}>
-                    <span className={METADATA_ICON_CLASS}>
-                      {profile.available ? (
-                        <CheckCircle2 className="text-muted-foreground size-3.5" />
-                      ) : (
-                        <CircleX className="text-muted-foreground size-3.5" />
-                      )}
-                    </span>
-                    {profile.available ? (
-                      <span className="leading-none">Available</span>
-                    ) : (
-                      <span className="leading-none">Not available</span>
-                    )}
                   </span>
                 </div>
               </div>

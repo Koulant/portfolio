@@ -13,7 +13,7 @@ export default function ProjectsPage() {
   const isExternalHref = (href: string) => href.startsWith("http");
 
   return (
-    <section className="space-y-8 text-left">
+    <section className="space-y-6 text-left">
       <Card>
         <CardHeader className="pb-3">
           <CardTitle>Projects</CardTitle>

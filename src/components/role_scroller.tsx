@@ -11,6 +11,7 @@ type ScrollPhase = "show" | "hide";
 export function RoleScroller({ roles }: RoleScrollerProps) {
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<ScrollPhase>("show");
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const transitionMs = 420;
   const holdMs = 1800;
   const safeRoles = useMemo(() => roles.filter(Boolean), [roles]);
@@ -18,7 +19,20 @@ export function RoleScroller({ roles }: RoleScrollerProps) {
   const safeRolesKey = safeRoles.join("|");
 
   useEffect(() => {
-    if (safeRoleCount <= 1) return;
+    if (typeof window === "undefined") return;
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionPreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    handleMotionPreference();
+    mediaQuery.addEventListener("change", handleMotionPreference);
+
+    return () => mediaQuery.removeEventListener("change", handleMotionPreference);
+  }, []);
+
+  useEffect(() => {
+    if (safeRoleCount <= 1 || prefersReducedMotion) return;
+
     let cycleTimer: ReturnType<typeof setTimeout> | null = null;
 
     const cycle = () => {
@@ -35,10 +49,14 @@ export function RoleScroller({ roles }: RoleScrollerProps) {
     return () => {
       if (cycleTimer) clearTimeout(cycleTimer);
     };
-  }, [safeRoleCount, safeRolesKey, transitionMs, holdMs]);
+  }, [safeRoleCount, safeRolesKey, transitionMs, holdMs, prefersReducedMotion]);
 
   if (safeRoles.length === 0) {
     return null;
+  }
+
+  if (prefersReducedMotion) {
+    return <p className="text-muted-foreground h-8 overflow-hidden text-xl">{safeRoles[index]}</p>;
   }
 
   return (
