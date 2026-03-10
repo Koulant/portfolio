@@ -24,8 +24,8 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div className="rounded-lg border border-border p-5">
-        <p className="text-sm text-muted-foreground">
+      <div className="border-border rounded-lg border p-5">
+        <p className="text-muted-foreground text-sm">
           Please fill out the form below and I&apos;ll get back to you as soon as possible.
         </p>
 
@@ -39,7 +39,7 @@ export default function ContactPage() {
                   name="firstName"
                   type="text"
                   placeholder="Your first name"
-                  className="h-11 w-full rounded-md border border-input bg-transparent px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  className="border-input placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-ring/50 h-11 w-full rounded-md border bg-transparent px-3 text-sm transition-colors outline-none focus-visible:ring-[3px]"
                 />
               </Field>
 
@@ -50,7 +50,7 @@ export default function ContactPage() {
                   name="lastName"
                   type="text"
                   placeholder="Your last name"
-                  className="h-11 w-full rounded-md border border-input bg-transparent px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  className="border-input placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-ring/50 h-11 w-full rounded-md border bg-transparent px-3 text-sm transition-colors outline-none focus-visible:ring-[3px]"
                 />
               </Field>
             </div>
@@ -62,7 +62,7 @@ export default function ContactPage() {
                 name="email"
                 type="email"
                 placeholder="Your email address"
-                className="h-11 w-full rounded-md border border-input bg-transparent px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="border-input placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-ring/50 h-11 w-full rounded-md border bg-transparent px-3 text-sm transition-colors outline-none focus-visible:ring-[3px]"
               />
             </Field>
 
@@ -73,7 +73,7 @@ export default function ContactPage() {
                 name="message"
                 placeholder="Enter your message here..."
                 rows={6}
-                className="w-full rounded-md border border-input bg-transparent px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="border-input placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-ring/50 w-full rounded-md border bg-transparent px-3 py-2.5 text-sm transition-colors outline-none focus-visible:ring-[3px]"
               />
             </Field>
           </FieldGroup>
@@ -81,36 +81,36 @@ export default function ContactPage() {
           <Button type="button" className="h-11 w-full text-sm">
             Submit
           </Button>
-          <p className="text-center text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-center text-xs">
             Form submission is not wired yet. Use the contact links below for now.
           </p>
         </form>
       </div>
 
-      <div className="rounded-lg border border-border p-5">
-        <p className="mb-3 text-sm font-medium text-muted-foreground">Direct links</p>
+      <div className="border-border rounded-lg border p-5">
+        <p className="text-muted-foreground mb-3 text-sm font-medium">Direct links</p>
         <div className="flex flex-wrap gap-4">
-        {contactMethods.map((method) =>
-          isExternalHref(method.href) ? (
-            <a
-              key={method.label}
-              href={method.href}
-              target={isHttpHref(method.href) ? "_blank" : undefined}
-              rel={isHttpHref(method.href) ? "noopener noreferrer" : undefined}
-              className="text-sm text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
-            >
-              {method.label}: {method.value}
-            </a>
-          ) : (
-            <Link
-              key={method.label}
-              href={method.href}
-              className="text-sm text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
-            >
-              {method.label}: {method.value}
-            </Link>
-          )
-        )}
+          {contactMethods.map((method) =>
+            isExternalHref(method.href) ? (
+              <a
+                key={method.label}
+                href={method.href}
+                target={isHttpHref(method.href) ? "_blank" : undefined}
+                rel={isHttpHref(method.href) ? "noopener noreferrer" : undefined}
+                className="text-muted-foreground hover:text-foreground text-sm underline underline-offset-4 transition-colors"
+              >
+                {method.label}: {method.value}
+              </a>
+            ) : (
+              <Link
+                key={method.label}
+                href={method.href}
+                className="text-muted-foreground hover:text-foreground text-sm underline underline-offset-4 transition-colors"
+              >
+                {method.label}: {method.value}
+              </Link>
+            )
+          )}
         </div>
       </div>
     </section>

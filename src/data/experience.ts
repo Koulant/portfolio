@@ -11,7 +11,8 @@ export const experience: ExperienceItem[] = [
     company: "Newton.co",
     role: "Software Engineer L1",
     period: "Sep 2024 - Jan 2026",
-    summary: "Built and maintained production backend systems for fintech operations in a regulated environment.",
+    summary:
+      "Built and maintained production backend systems for fintech operations in a regulated environment.",
     highlights: [
       "Developed high-throughput services using Python (Django), Go, and PostgreSQL.",
       "Improved reliability and audit readiness across business-critical transaction systems.",
@@ -23,7 +24,8 @@ export const experience: ExperienceItem[] = [
     company: "Newton.co",
     role: "Software Engineer Intern",
     period: "May 2024 - Aug 2024",
-    summary: "Supported backend feature delivery and service reliability improvements in fintech workflows.",
+    summary:
+      "Supported backend feature delivery and service reliability improvements in fintech workflows.",
     highlights: [
       "Contributed to backend services using Python (Django), Go, and PostgreSQL.",
       "Implemented tested improvements to internal systems and development workflows.",
