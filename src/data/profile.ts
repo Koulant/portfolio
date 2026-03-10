@@ -18,11 +18,7 @@ export type Profile = {
 export const profile: Profile = {
   name: "Anton Koulikov",
   role: "Software Engineer",
-  roles: [
-    "Software Engineer",
-    "Building Reliable Systems",
-    "Shipping Full-Stack Solutions",
-  ],
+  roles: ["Software Engineer", "Building Reliable Systems", "Shipping Full-Stack Solutions"],
   location: "Calgary, Alberta, Canada",
   timezone: "America/Edmonton",
   portraitUrl: "/portrait.jpg",
