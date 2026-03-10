@@ -19,18 +19,18 @@ export default function ProjectsPage() {
 
       <div className="space-y-6">
         {projects.map((project) => (
-          <article key={project.title} className="space-y-4 rounded-lg border border-border p-5">
+          <article key={project.title} className="border-border space-y-4 rounded-lg border p-5">
             <div className="space-y-2">
               <h2 className="text-xl font-semibold">{project.title}</h2>
-              <p className="text-sm leading-7 text-foreground/90">{project.description}</p>
-              <p className="text-sm text-muted-foreground">{project.impact}</p>
+              <p className="text-foreground/90 text-sm leading-7">{project.description}</p>
+              <p className="text-muted-foreground text-sm">{project.impact}</p>
             </div>
 
             <div className="flex flex-wrap gap-2">
               {project.stack.map((item) => (
                 <span
                   key={`${project.title}-${item}`}
-                  className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground"
+                  className="border-border text-muted-foreground rounded-full border px-2.5 py-1 text-xs"
                 >
                   {item}
                 </span>

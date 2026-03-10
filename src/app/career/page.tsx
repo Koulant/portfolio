@@ -16,14 +16,17 @@ export default function CareerPage() {
 
       <div className="space-y-6">
         {experience.map((item) => (
-          <article key={`${item.company}-${item.role}`} className="rounded-lg border border-border p-5">
+          <article
+            key={`${item.company}-${item.role}`}
+            className="border-border rounded-lg border p-5"
+          >
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h2 className="text-xl font-semibold">{item.role}</h2>
-              <p className="text-sm text-muted-foreground">{item.period}</p>
+              <p className="text-muted-foreground text-sm">{item.period}</p>
             </div>
-            <p className="mt-1 text-sm font-medium text-muted-foreground">{item.company}</p>
-            <p className="mt-4 text-sm leading-7 text-foreground/90">{item.summary}</p>
-            <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-foreground/90">
+            <p className="text-muted-foreground mt-1 text-sm font-medium">{item.company}</p>
+            <p className="text-foreground/90 mt-4 text-sm leading-7">{item.summary}</p>
+            <ul className="text-foreground/90 mt-4 list-disc space-y-2 pl-5 text-sm">
               {item.highlights.map((highlight) => (
                 <li key={highlight}>{highlight}</li>
               ))}
