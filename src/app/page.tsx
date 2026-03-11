@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { profile } from "@/data/profile";
+import { METADATA_PILL_CLASS, METADATA_PILL_ICON_CLASS } from "@/lib/ui-patterns";
 
 export const metadata: Metadata = {
   title: "About",
@@ -22,9 +23,6 @@ const SOCIAL_IMAGE_CLASS = "h-7 w-7 object-contain";
 const TECHNOLOGY_ICON_CLASS =
   "inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full transition-colors";
 const TECHNOLOGY_IMAGE_CLASS = "h-8 w-8 object-contain";
-const METADATA_ITEM_CLASS =
-  "inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full border border-border/60 px-2.5";
-const METADATA_ICON_CLASS = "inline-flex h-5 w-5 items-center justify-center";
 
 type SocialIconConfig =
   | { kind: "brand"; lightSrc: string; darkSrc: string }
@@ -202,14 +200,14 @@ export default function HomePage() {
                   <RoleScroller roles={profile.roles} />
                 </div>
                 <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-sm leading-none">
-                  <span className={METADATA_ITEM_CLASS}>
-                    <span className={METADATA_ICON_CLASS}>
+                  <span className={METADATA_PILL_CLASS}>
+                    <span className={METADATA_PILL_ICON_CLASS}>
                       <MapPin className="text-muted-foreground size-3.5" />
                     </span>
                     <span className="leading-none">{profile.location}</span>
                   </span>
-                  <span className={METADATA_ITEM_CLASS}>
-                    <span className={METADATA_ICON_CLASS}>
+                  <span className={METADATA_PILL_CLASS}>
+                    <span className={METADATA_PILL_ICON_CLASS}>
                       <Clock3 className="text-muted-foreground size-3.5" />
                     </span>
                     <CurrentTime timezone={profile.timezone} />
