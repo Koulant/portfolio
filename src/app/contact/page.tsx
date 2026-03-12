@@ -6,7 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { contactMethods } from "@/data/contact";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: {
+    absolute: "Contact | Anton Koulikov",
+  },
 };
 
 export default function ContactPage() {

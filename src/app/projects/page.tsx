@@ -28,7 +28,9 @@ import {
 import { projects } from "@/data/projects";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: {
+    absolute: "Projects | Anton Koulikov",
+  },
 };
 
 function isExternalHref(href: string) {
@@ -40,16 +42,72 @@ function isExternalHref(href: string) {
   }
 }
 
-function ProjectImage({
+function shouldUseCarousel(images: { src: string; alt: string }[]) {
+  return images.length > 1;
+}
+
+function toYouTubeEmbedUrl(rawUrl: string) {
+  try {
+    const parsed = new URL(rawUrl);
+    const host = parsed.hostname.replace("www.", "");
+
+    if (host === "youtu.be") {
+      const id = parsed.pathname.replace("/", "");
+      const start = parsed.searchParams.get("t");
+
+      const embedBase = `https://www.youtube.com/embed/${id}`;
+      if (!start) return embedBase;
+
+      return `${embedBase}?start=${encodeURIComponent(start)}`;
+    }
+
+    if (host.includes("youtube.com")) {
+      const id = parsed.searchParams.get("v");
+      if (!id) return rawUrl;
+
+      const start = parsed.searchParams.get("t");
+      const embedBase = `https://www.youtube.com/embed/${id}`;
+
+      if (!start) return embedBase;
+
+      return `${embedBase}?start=${encodeURIComponent(start)}`;
+    }
+  } catch {
+    return rawUrl;
+  }
+
+  return rawUrl;
+}
+
+function ProjectMedia({
   images,
-  enableCarousel,
+  demoVideoUrl,
 }: {
   images: { src: string; alt: string }[];
-  enableCarousel: boolean;
+  demoVideoUrl?: string;
 }) {
+  if (demoVideoUrl) {
+    const embedUrl = toYouTubeEmbedUrl(demoVideoUrl);
+
+    return (
+      <div className="relative w-full overflow-hidden rounded-md border">
+        <div className="aspect-video w-full">
+          <iframe
+            src={embedUrl}
+            title="Project walkthrough"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+            className="h-full w-full border-0"
+          />
+        </div>
+      </div>
+    );
+  }
+
   if (images.length === 0) return null;
 
-  if (!enableCarousel || images.length === 1) {
+  if (!shouldUseCarousel(images)) {
     const featuredImage = images[0];
 
     return (
@@ -86,10 +144,6 @@ function ProjectImage({
       <CarouselNext />
     </Carousel>
   );
-}
-
-function shouldUseCarousel(images: { src: string; alt: string }[]) {
-  return images.length > 1;
 }
 
 export default function ProjectsPage() {
@@ -133,14 +187,13 @@ export default function ProjectsPage() {
               </SectionHeader>
               <AccordionContent>
                 <SectionBody>
-                  {project.images && project.images.length > 0 ? (
+                  {project.images ? (
                     <div className="space-y-4">
-                      <ProjectImage
-                        images={project.images}
-                        enableCarousel={shouldUseCarousel(project.images)}
-                      />
+                      <ProjectMedia images={project.images} demoVideoUrl={project.demoVideoUrl} />
                     </div>
-                  ) : null}
+                  ) : (
+                    <ProjectMedia images={[]} demoVideoUrl={project.demoVideoUrl} />
+                  )}
 
                   <p
                     className={`text-foreground/90 ${compactClass(project, "mt-4", "mt-1")} text-sm leading-7`}

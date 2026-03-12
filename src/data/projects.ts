@@ -16,6 +16,7 @@ export type ProjectItem = {
   }[];
   repoUrl: string;
   liveUrl?: string;
+  demoVideoUrl?: string;
 };
 
 export const projects: ProjectItem[] = [
@@ -66,6 +67,7 @@ export const projects: ProjectItem[] = [
       "Built a scalable end-to-end flow for simulated trading with clear product UX and technical boundaries.",
       "Integrated live data and transaction workflows to keep portfolio state and market context synchronized.",
     ],
+    demoVideoUrl: "https://youtu.be/-x5gJhCSRYw?si=ImNBsNUMxvEj9EtW&t=684",
     images: [
       { src: "/file.svg", alt: "Capstone project screenshot placeholder" },
       { src: "/vercel.svg", alt: "Capstone project screenshot placeholder" },

@@ -13,7 +13,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { profile } from "@/data/profile";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: {
+    absolute: "About | Anton Koulikov",
+  },
 };
 
 const SOCIAL_BUTTON_CLASS = "gap-2 px-3 h-11";

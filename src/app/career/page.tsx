@@ -17,7 +17,9 @@ import { CardTitle } from "@/components/ui/card";
 import { experience, type ExperienceItem } from "@/data/experience";
 
 export const metadata: Metadata = {
-  title: "Career",
+  title: {
+    absolute: "Career | Anton Koulikov",
+  },
 };
 
 type CompanyTimeline = {
@@ -150,12 +152,14 @@ export default function CareerPage() {
                 {companyData.roles.map((role, roleIndex) => (
                   <div
                     key={`${role.role.company}-${role.role.role}-${role.role.period}-${role.originalIndex}`}
-                    className="relative flex min-h-12 items-stretch pl-5"
+                    className="flex items-stretch gap-4"
                   >
-                    <span className="bg-background border-border absolute top-2 left-0 h-3 w-3 rounded-full border" />
-                    {roleIndex < companyData.roles.length - 1 ? (
-                      <span className="bg-border absolute top-5 left-[5px] h-full w-px" />
-                    ) : null}
+                    <div className="flex w-4 flex-col items-center">
+                      <span className="bg-background border-border mt-2 h-3 w-3 rounded-full border" />
+                      {roleIndex < companyData.roles.length - 1 ? (
+                        <span className="bg-border mt-2 -mb-4 w-px flex-1" />
+                      ) : null}
+                    </div>
                     <AccordionItem
                       value={`company-${companyIndex}-${roleIndex}`}
                       className="w-full border-none"
@@ -168,7 +172,7 @@ export default function CareerPage() {
                             </CardTitle>
                             <p className="text-muted-foreground mt-0.5 text-sm">
                               {role.role.period}
-                              {role.role.location ? ` ${"\u2022"} ${role.role.location}` : ""}
+                              {role.role.location ? ` | ${role.role.location}` : ""}
                             </p>
                           </div>
                           <div className="flex flex-wrap gap-2">

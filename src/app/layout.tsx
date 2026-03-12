@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/theme_provider";
 
 export const metadata: Metadata = {
   title: {
-    default: "Anton Koulikov | Portfolio",
+    default: "Anton Koulikov",
     template: "%s | Anton Koulikov",
   },
   description:
