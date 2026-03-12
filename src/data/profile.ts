@@ -18,14 +18,19 @@ export type Profile = {
 export const profile: Profile = {
   name: "Anton Koulikov",
   role: "Software Engineer",
-  roles: ["Software Engineer", "Building Reliable Systems", "Shipping Full-Stack Solutions"],
+  roles: [
+    "Software Engineer",
+    "Building Reliable Systems",
+    "Building reliable systems and practical software products",
+  ],
   location: "Calgary, Alberta, Canada",
   timezone: "America/Edmonton",
   portraitUrl: "/portrait.jpg",
   intro: [
-    "Software Engineer and full-stack builder with a focus on reliable fintech systems and measurable business impact. Based in Calgary, Alberta.",
-    "I care about turning complex operational problems into practical software that is accurate, auditable, and dependable.",
-    "Currently sharpening my frontend skills with React and Next.js to build cleaner end-to-end product experiences.",
+    "Software engineer focused on building reliable backend systems and practical full stack applications.",
+    "Previously at Newton Crypto, where I helped build production fintech infrastructure that handled high volume transactions, financial reconciliation, and audit ready financial data.",
+    "My core stack includes Python with Django, Go, and PostgreSQL. I enjoy working close to the data layer and designing systems that keep complex state accurate and dependable.",
+    "More recently I have been expanding my frontend skills with React and Next.js to build complete end to end product experiences.",
   ],
   techStack: [
     "Python",

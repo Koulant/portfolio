@@ -1,5 +1,6 @@
 export type ExperienceItem = {
   company: string;
+  companyUrl?: string;
   role: string;
   period: string;
   location: string;
@@ -13,40 +14,43 @@ export type ExperienceItem = {
 export const experience: ExperienceItem[] = [
   {
     company: "Newton Crypto",
+    companyUrl: "https://www.newton.co",
     role: "Junior Software Engineer",
     period: "Sep 2024 - Jan 2026",
     location: "Toronto, Ontario, Canada (Remote)",
     technologies: ["Python", "Django", "Go", "PostgreSQL", "AWS", "Pulumi", "Datadog"],
     employmentType: "Full-time",
     summary:
-      "Built and maintained production fintech systems in a regulated environment, focusing on financial correctness and reliability.",
+      "Built and maintained production fintech systems in a regulated environment with a strong focus on financial correctness, reliability, and operational efficiency.",
     highlights: [
-      "Designed and shipped Python (Django), Go, and PostgreSQL services that supported high-throughput financial workflows.",
-      "Implemented audit-ready data handling, balance tracking, and reconciliation patterns for critical transaction paths.",
-      "Built monitoring and observability into production services to reduce incident response time and improve stability.",
-      "Collaborated across product, finance, and engineering teams to deliver compliant, business-impacting features.",
-      "Contributed to cloud infrastructure and releases using AWS and Pulumi.",
+      "Designed and shipped backend services in Python, Go, and PostgreSQL that supported high throughput financial workflows.",
+      "Helped build auditable financial infrastructure with balance tracking, reconciliation, and strong data integrity guarantees.",
+      "Improved production reliability through monitoring, alerting, and structured debugging workflows.",
+      "Worked closely with product, finance, and engineering teams to deliver compliant and business critical features.",
+      "Contributed to cloud infrastructure and service deployment workflows using AWS and Pulumi.",
     ],
     featured: true,
   },
   {
     company: "Newton Crypto",
+    companyUrl: "https://www.newton.co",
     role: "Software Engineer Intern",
     period: "May 2024 - Aug 2024",
     location: "Toronto, Ontario, Canada (Remote)",
     technologies: ["Python", "Django", "Go", "PostgreSQL", "REST APIs"],
     employmentType: "Full-time",
     summary:
-      "Contributed to platform enhancements and service reliability work while ramping on production-grade backend systems.",
+      "Contributed to backend platform improvements and reliability work while learning production grade financial systems.",
     highlights: [
-      "Enhanced core staking and rewards systems to support additional assets and reliability improvements.",
-      "Built and refined transaction-related features using Django, Go, and PostgreSQL with review and test discipline.",
-      "Reduced operational risk by addressing production issues in a structured triage and patch flow.",
-      "Supported team delivery by improving code quality and onboarding collaboration workflows.",
+      "Enhanced transaction and rewards systems used in core product workflows.",
+      "Built backend features using Django, Go, and PostgreSQL with strong attention to correctness and testing.",
+      "Investigated and resolved production issues affecting reliability and user experience.",
+      "Collaborated with senior engineers through code reviews, debugging, and design discussions.",
     ],
   },
   {
     company: "YMCA Calgary",
+    companyUrl: "https://www.ymcacalgary.org/",
     role: "IT Help Desk Analyst",
     period: "May 2023 - Sep 2023",
     location: "Calgary, Alberta",
@@ -58,12 +62,12 @@ export const experience: ExperienceItem[] = [
     ],
     employmentType: "Part-time",
     summary:
-      "Provided desktop and account support across hundreds of users while improving day-to-day IT service quality.",
+      "Provided technical support across a large community organization, helping staff and volunteers resolve hardware, software, and access issues quickly and reliably.",
     highlights: [
-      "Supported 1,100+ staff and volunteers with hands-on software, hardware, and network troubleshooting.",
-      "Provisioned and managed access in Active Directory for secure onboarding and offboarding.",
-      "Deployed and configured workplace hardware including printers, mobile devices, and workstations.",
-      "Escalated effectively when needed and maintained strong service continuity during high-volume support periods.",
+      "Supported more than 1,100 staff and volunteers with day to day technical troubleshooting.",
+      "Managed user onboarding and access changes through Active Directory.",
+      "Assisted with hardware rollouts, workstation setup, and device support across multiple locations.",
+      "Developed strong troubleshooting and systems thinking skills through hands on IT support work.",
     ],
   },
 ];

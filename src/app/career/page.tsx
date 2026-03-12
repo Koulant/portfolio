@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 
 import {
+  SectionBody,
+  SectionHeader,
+  SectionItemCard,
+  SectionLeadPanel,
+} from "@/components/page-section";
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardTitle } from "@/components/ui/card";
 import { experience, type ExperienceItem } from "@/data/experience";
 
 export const metadata: Metadata = {
@@ -40,14 +46,25 @@ const MONTH_INDEX: Record<string, number> = {
 };
 
 function parsePeriodStart(period: string): ParsedDate | null {
-  const start = period.split("-")[0]?.trim();
+  const normalizedPeriod = period.replace(/\s*-\s*/g, " - ").trim();
+  const start = normalizedPeriod.split(" - ")[0]?.trim();
   if (!start) return null;
 
-  const [month, year] = start.split(" ");
-  if (!month || !year) return null;
+  const splitParts = start.split(" ").filter(Boolean);
+  if (splitParts.length === 1) {
+    const yearOnly = Number.parseInt(splitParts[0], 10);
+    if (!Number.isFinite(yearOnly)) return null;
+
+    return { year: yearOnly, monthIndex: 0 };
+  }
+
+  const [monthRaw, yearRaw] = splitParts;
+  if (!monthRaw || !yearRaw) return null;
+
+  const month = monthRaw.charAt(0).toUpperCase() + monthRaw.slice(1).toLowerCase();
 
   const monthIndex = MONTH_INDEX[month as keyof typeof MONTH_INDEX];
-  const parsedYear = Number.parseInt(year, 10);
+  const parsedYear = Number.parseInt(yearRaw, 10);
 
   if (!Number.isFinite(parsedYear) || monthIndex === undefined) return null;
 
@@ -67,13 +84,6 @@ function isMostRecentPeriod(indexA: number, indexB: number): boolean {
   if (!parsedB) return true;
 
   return startsAfter(parsedA, parsedB);
-}
-
-function getWorkArrangement(location: string): string {
-  if (/\bremote\b/i.test(location)) return "Remote";
-  if (/\bhybrid\b/i.test(location)) return "Hybrid";
-  if (/\bon[- ]?site\b/i.test(location)) return "On-site";
-  return "On-site";
 }
 
 export default function CareerPage() {
@@ -100,15 +110,10 @@ export default function CareerPage() {
 
   return (
     <section className="space-y-6 text-left">
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle>Career</CardTitle>
-          <p className="text-muted-foreground text-sm">
-            Product-focused software engineering experience across fintech, backend systems, and
-            support operations.
-          </p>
-        </CardHeader>
-      </Card>
+      <SectionLeadPanel
+        title="Career"
+        description="Product focused software engineering experience across fintech, backend systems, and operational reliability."
+      />
 
       {companies.map((companyData, companyIndex) => {
         const defaultOpenRoleIndex = companyData.roles.findIndex(
@@ -118,21 +123,28 @@ export default function CareerPage() {
           defaultOpenRoleIndex >= 0 ? `company-${companyIndex}-${defaultOpenRoleIndex}` : undefined;
 
         return (
-          <Card key={`${companyData.company}-${companyIndex}`} className="overflow-hidden">
-            <CardHeader className="pb-3">
-              <CardTitle>{companyData.company}</CardTitle>
-              {companyData.roles.length > 0 && (
-                <p className="text-muted-foreground text-sm">
-                  {companyData.roles[0].role.location}
-                </p>
-              )}
-            </CardHeader>
+          <SectionItemCard key={`${companyData.company}-${companyIndex}`}>
+            <SectionHeader>
+              <CardTitle>
+                {companyData.roles.length > 0 && companyData.roles[0].role.companyUrl ? (
+                  <a
+                    href={companyData.roles[0].role.companyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {companyData.company}
+                  </a>
+                ) : (
+                  companyData.company
+                )}
+              </CardTitle>
+            </SectionHeader>
 
-            <CardContent className="pt-0">
+            <SectionBody>
               <Accordion
-                type="single"
-                collapsible
-                defaultValue={defaultValue}
+                type="multiple"
+                defaultValue={defaultValue ? [defaultValue] : undefined}
                 className="space-y-4"
               >
                 {companyData.roles.map((role, roleIndex) => (
@@ -155,8 +167,8 @@ export default function CareerPage() {
                               {role.role.role}
                             </CardTitle>
                             <p className="text-muted-foreground mt-0.5 text-sm">
-                              {role.role.period} | {getWorkArrangement(role.role.location)} |{" "}
-                              {role.role.employmentType ?? "Full-time"}
+                              {role.role.period}
+                              {role.role.location ? ` ${"\u2022"} ${role.role.location}` : ""}
                             </p>
                           </div>
                           <div className="flex flex-wrap gap-2">
@@ -184,8 +196,8 @@ export default function CareerPage() {
                   </div>
                 ))}
               </Accordion>
-            </CardContent>
-          </Card>
+            </SectionBody>
+          </SectionItemCard>
         );
       })}
     </section>

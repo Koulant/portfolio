@@ -6,11 +6,11 @@ import Link from "next/link";
 import { CurrentTime } from "@/components/current_time";
 import { RoleScroller } from "@/components/role_scroller";
 import { TechIcon } from "@/components/tech_icon";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { profile } from "@/data/profile";
-import { METADATA_PILL_CLASS, METADATA_PILL_ICON_CLASS } from "@/lib/ui-patterns";
 
 export const metadata: Metadata = {
   title: "About",
@@ -200,18 +200,20 @@ export default function HomePage() {
                   <RoleScroller roles={profile.roles} />
                 </div>
                 <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-sm leading-none">
-                  <span className={METADATA_PILL_CLASS}>
-                    <span className={METADATA_PILL_ICON_CLASS}>
-                      <MapPin className="text-muted-foreground size-3.5" />
+                  <Badge variant="outline" className="h-7 gap-1.5 rounded-full px-2.5">
+                    <span className="inline-flex h-5 w-5 items-center justify-center">
+                      <MapPin className="size-3.5" />
                     </span>
                     <span className="leading-none">{profile.location}</span>
-                  </span>
-                  <span className={METADATA_PILL_CLASS}>
-                    <span className={METADATA_PILL_ICON_CLASS}>
-                      <Clock3 className="text-muted-foreground size-3.5" />
+                  </Badge>
+                  <Badge variant="outline" className="h-7 gap-1.5 rounded-full px-2.5">
+                    <span className="inline-flex h-5 w-5 items-center justify-center">
+                      <Clock3 className="size-3.5" />
                     </span>
-                    <CurrentTime timezone={profile.timezone} />
-                  </span>
+                    <span className="leading-none">
+                      <CurrentTime timezone={profile.timezone} />
+                    </span>
+                  </Badge>
                 </div>
               </div>
             </div>
