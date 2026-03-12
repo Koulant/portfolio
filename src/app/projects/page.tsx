@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { type ReactNode, useState } from "react";
+import type { ReactNode } from "react";
 
 import {
   SectionBody,
@@ -160,18 +160,12 @@ function toYouTubeEmbedUrl(rawUrl: string) {
 }
 
 function ProjectMedia({
-  isOpen,
   images,
   demoVideoUrl,
 }: {
-  isOpen: boolean;
   images: { src: string; alt: string }[];
   demoVideoUrl?: string;
 }) {
-  if (!isOpen) {
-    return null;
-  }
-
   if (demoVideoUrl) {
     const embedUrl = toYouTubeEmbedUrl(demoVideoUrl);
 
@@ -239,11 +233,6 @@ export default function ProjectsPage() {
     0
   );
   const defaultOpenProject = projects.length > 0 ? `project-${mostRecentProjectIndex}` : undefined;
-  const [openProjectValues, setOpenProjectValues] = useState<string[]>(
-    defaultOpenProject ? [defaultOpenProject] : []
-  );
-  const isProjectOpen = (projectIndex: number) =>
-    openProjectValues.includes(`project-${projectIndex}`);
 
   return (
     <section className="space-y-6 text-left">
@@ -254,98 +243,95 @@ export default function ProjectsPage() {
 
       <Accordion
         type="multiple"
-        value={openProjectValues}
-        onValueChange={setOpenProjectValues}
+        defaultValue={defaultOpenProject ? [defaultOpenProject] : []}
         className="space-y-4"
       >
-        {projects.map((project, projectIndex) => {
-          const projectValue = `project-${projectIndex}`;
-
-          return (
-            <SectionItemCard key={project.title}>
-              <AccordionItem value={projectValue} className="border-none">
-                <SectionHeader>
-                  <AccordionTrigger className="w-full justify-start gap-0 px-0 py-0 hover:no-underline">
-                    <div className="w-full space-y-2 text-left">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <CardTitle className="text-xl leading-tight">{project.title}</CardTitle>
-                        {project.teamType ? <Badge>{project.teamType}</Badge> : null}
-                      </div>
-                      <p className="text-muted-foreground text-sm">{project.period}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.stack.map((item) => (
-                          <Badge key={`${project.title}-${item}`} variant="secondary">
-                            {item}
-                          </Badge>
-                        ))}
-                      </div>
+        {projects.map((project, projectIndex) => (
+          <SectionItemCard key={project.title}>
+            <AccordionItem value={`project-${projectIndex}`} className="border-none">
+              <SectionHeader>
+                <AccordionTrigger className="w-full justify-start gap-0 px-0 py-0 hover:no-underline">
+                  <div className="w-full space-y-2 text-left">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <CardTitle className="text-xl leading-tight">{project.title}</CardTitle>
+                      {project.teamType ? <Badge>{project.teamType}</Badge> : null}
                     </div>
-                  </AccordionTrigger>
-                </SectionHeader>
-                <AccordionContent>
-                  <SectionBody className="space-y-4">
-                    <SectionText>{project.summary}</SectionText>
+                    <p className="text-muted-foreground text-sm">{project.period}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.stack.map((item) => (
+                        <Badge key={`${project.title}-${item}`} variant="secondary">
+                          {item}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </AccordionTrigger>
+              </SectionHeader>
+              <AccordionContent>
+                <SectionBody className="space-y-4">
+                  <SectionText>{project.summary}</SectionText>
 
-                    {project.description.split("\n\n").map((paragraph, index) => (
-                      <SectionText
-                        key={`${project.title}-description-${index}`}
-                        className={index === 0 ? "mt-4" : "mt-2"}
-                      >
-                        {paragraph}
-                      </SectionText>
-                    ))}
+                  {project.description.split("\n\n").map((paragraph, index) => (
+                    <SectionText
+                      key={`${project.title}-description-${index}`}
+                      className={index === 0 ? "mt-4" : "mt-2"}
+                    >
+                      {paragraph}
+                    </SectionText>
+                  ))}
 
-                    <ProjectMedia
-                      isOpen={isProjectOpen(projectIndex)}
-                      images={project.images ?? []}
-                      demoVideoUrl={project.demoVideoUrl}
-                    />
+                  {project.images ? (
+                    <ProjectMedia images={project.images} demoVideoUrl={project.demoVideoUrl} />
+                  ) : (
+                    <ProjectMedia images={[]} demoVideoUrl={project.demoVideoUrl} />
+                  )}
 
-                    {project.role ? (
-                      <SectionText className="mt-3">{project.role}</SectionText>
-                    ) : null}
+                  {project.role ? <SectionText className="mt-3">{project.role}</SectionText> : null}
 
-                    <SectionList items={project.details} className="mt-3" />
+                  <SectionList items={project.details} className="mt-3" />
 
-                    {project.engineeringChallenge ? (
-                      <>
-                        <SectionLabel className="mt-4">Engineering challenge</SectionLabel>
-                        <SectionText className="mt-2">{project.engineeringChallenge}</SectionText>
-                      </>
-                    ) : null}
+                  {project.engineeringChallenge ? (
+                    <>
+                      <SectionLabel className="mt-4">Engineering challenge</SectionLabel>
+                      <SectionText className="mt-2">{project.engineeringChallenge}</SectionText>
+                    </>
+                  ) : null}
 
-                    <div className="mt-4 flex flex-wrap items-center gap-3">
-                      {isExternalHref(project.repoUrl) ? (
+                  {project.highlights.length ? (
+                    <SectionList items={project.highlights} className="mt-3" />
+                  ) : null}
+
+                  <div className="mt-4 flex flex-wrap items-center gap-3">
+                    {isExternalHref(project.repoUrl) ? (
+                      <Button asChild variant="outline" size="sm">
+                        <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                          Repository
+                        </a>
+                      </Button>
+                    ) : (
+                      <Button asChild variant="outline" size="sm">
+                        <Link href={project.repoUrl}>Repository</Link>
+                      </Button>
+                    )}
+                    {project.liveUrl ? (
+                      isExternalHref(project.liveUrl) ? (
                         <Button asChild variant="outline" size="sm">
-                          <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                            Repository
+                          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                            Live Demo
                           </a>
                         </Button>
                       ) : (
                         <Button asChild variant="outline" size="sm">
-                          <Link href={project.repoUrl}>Repository</Link>
+                          <Link href={project.liveUrl}>Live Demo</Link>
                         </Button>
-                      )}
-                      {project.liveUrl ? (
-                        isExternalHref(project.liveUrl) ? (
-                          <Button asChild variant="outline" size="sm">
-                            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                              Live Demo
-                            </a>
-                          </Button>
-                        ) : (
-                          <Button asChild variant="outline" size="sm">
-                            <Link href={project.liveUrl}>Live Demo</Link>
-                          </Button>
-                        )
-                      ) : null}
-                    </div>
-                  </SectionBody>
-                </AccordionContent>
-              </AccordionItem>
-            </SectionItemCard>
-          );
-        })}
+                      )
+                    ) : null}
+                  </div>
+                </SectionBody>
+              </AccordionContent>
+            </AccordionItem>
+          </SectionItemCard>
+        ))}
       </Accordion>
     </section>
   );

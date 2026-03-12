@@ -427,7 +427,7 @@ export default function HomePage() {
         <CardContent>
           <TooltipProvider>
             <div className="space-y-4">
-              {stackSections.map((section) => (
+              {stackSections.map((section, sectionIndex) => (
                 <div key={section.title} className="space-y-2">
                   <h3 className="text-muted-foreground text-sm font-medium">{section.title}</h3>
                   <div className="flex flex-wrap items-center gap-2">
