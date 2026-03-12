@@ -64,10 +64,7 @@ export const projects: ProjectItem[] = [
       "Simulating a trading platform required keeping portfolio balances consistent while prices updated in real time. The backend API computes portfolio value dynamically from stored trades combined with live market pricing.",
     highlights: [],
     demoVideoUrl: "https://youtu.be/-x5gJhCSRYw?si=ImNBsNUMxvEj9EtW&t=684",
-    images: [
-      { src: "/file.svg", alt: "Capstone project screenshot placeholder" },
-      { src: "/vercel.svg", alt: "Capstone project screenshot placeholder" },
-    ],
+    images: [],
     repoUrl: "https://github.com/Koulant",
   },
 ];

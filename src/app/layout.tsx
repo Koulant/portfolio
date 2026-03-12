@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   },
   description:
     "Portfolio site for Anton Koulikov, a software engineer focused on backend systems and full-stack delivery.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
