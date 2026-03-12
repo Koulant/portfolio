@@ -2,13 +2,10 @@ export type ProjectItem = {
   title: string;
   period?: string;
   teamType?: "Solo" | "Team";
-  type?: string;
-  compact?: boolean;
   description: string;
   summary: string;
   stack: string[];
   details: string[];
-  highlights: string[];
   role?: string;
   engineeringChallenge?: string;
   images?: {
@@ -24,9 +21,7 @@ export const projects: ProjectItem[] = [
   {
     title: "Portfolio Website",
     period: "2026 - ∞",
-    compact: true,
     teamType: "Solo",
-    type: "Full-stack portfolio platform",
     summary:
       "A developer portfolio built with Next.js, React, and TypeScript to present engineering experience and projects in a clean, structured format.",
     description:
@@ -37,7 +32,6 @@ export const projects: ProjectItem[] = [
       "Designed a clear content hierarchy to present experience, projects, and technical stack.",
       "Added TypeScript, linting, and formatting checks to keep the codebase consistent and reliable.",
     ],
-    highlights: [],
     images: [],
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui"],
     repoUrl: "https://github.com/Koulant/portfolio",
@@ -46,7 +40,6 @@ export const projects: ProjectItem[] = [
     title: "Crypto Paper Trading Platform",
     period: "2023 - 2024",
     teamType: "Team",
-    type: "Team product build",
     summary:
       "A full stack cryptocurrency paper trading platform where users can simulate trades, track portfolio performance, and explore market data.",
     description:
@@ -62,7 +55,6 @@ export const projects: ProjectItem[] = [
     ],
     engineeringChallenge:
       "Simulating a trading platform required keeping portfolio balances consistent while prices updated in real time. The backend API computes portfolio value dynamically from stored trades combined with live market pricing.",
-    highlights: [],
     demoVideoUrl: "https://youtu.be/-x5gJhCSRYw?si=ImNBsNUMxvEj9EtW&t=684",
     images: [],
     repoUrl: "https://github.com/Koulant",
