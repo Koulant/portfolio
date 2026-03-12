@@ -21,7 +21,10 @@ export function SiteLinks({ links, activePath, variant }: SiteLinksProps) {
     return (
       <NavigationMenuList className="gap-1">
         {links.map((link) => {
-          const isActive = activePath === link.href;
+          const isExactRoot = activePath === "/";
+          const isActive =
+            activePath === link.href ||
+            (isExactRoot ? false : activePath ? activePath.startsWith(`${link.href}/`) : false);
 
           return (
             <NavigationMenuItem key={link.href}>
