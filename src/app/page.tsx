@@ -252,6 +252,7 @@ function getTechIconUrl(tech: string): TechIconConfig {
 export default function HomePage() {
   const isExternalHref = (href: string) => href.startsWith("http") || href.startsWith("mailto:");
   const isHttpHref = (href: string) => href.startsWith("http");
+  const isStaticAssetHref = (href: string) => href.startsWith("/") && /\.[a-z0-9]+$/i.test(href);
   const orderedSocials = [...profile.socials].sort((a, b) => {
     const priority = (label: string) => {
       const normalized = label.toLowerCase();
@@ -360,7 +361,7 @@ export default function HomePage() {
                   className={SOCIAL_BUTTON_CLASS}
                   aria-label={linkLabel}
                 >
-                  {isExternalHref(link.href) ? (
+                  {isExternalHref(link.href) || isStaticAssetHref(link.href) ? (
                     <a
                       href={link.href}
                       target={isHttpHref(link.href) ? "_blank" : undefined}

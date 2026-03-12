@@ -7,17 +7,20 @@ type CurrentTimeProps = {
 };
 
 export function CurrentTime({ timezone }: CurrentTimeProps) {
-  const [currentTime, setCurrentTime] = useState(() => formatTime(timezone));
+  const [currentTime, setCurrentTime] = useState<string | null>(null);
 
   useEffect(() => {
+    const updateTime = () => setCurrentTime(formatTime(timezone));
+    updateTime();
+
     const timer = setInterval(() => {
-      setCurrentTime(formatTime(timezone));
+      updateTime();
     }, 60_000);
 
     return () => clearInterval(timer);
   }, [timezone]);
 
-  return <span>{currentTime}</span>;
+  return <span suppressHydrationWarning>{currentTime ?? "--:--"}</span>;
 }
 
 function formatTime(timezone: string) {
