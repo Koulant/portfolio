@@ -29,7 +29,7 @@ export const profile: Profile = {
   ],
   location: "Calgary, Alberta, Canada",
   timezone: "America/Edmonton",
-  portraitUrl: "/portrait.jpg",
+  portraitUrl: "/images/portrait.jpg",
   intro: [
     "Software engineer focused on building reliable backend systems and practical full stack software.",
     "Previously at Newton Crypto, where I helped build production fintech infrastructure supporting high volume transactions, financial reconciliation, and audit ready financial data.",
@@ -79,6 +79,6 @@ export const profile: Profile = {
     { href: "https://github.com/Koulant", label: "GitHub" },
     { href: "https://www.linkedin.com/in/antonkoulikov/", label: "LinkedIn" },
     { href: "mailto:antonk1337@gmail.com", label: "Email" },
-    { href: "/resume.pdf", label: "Resume" },
+    { href: "/files/resume.pdf", label: "Resume" },
   ],
 };
