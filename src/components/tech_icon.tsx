@@ -1,56 +1,39 @@
-"use client";
+import type { SimpleIcon } from "simple-icons";
 
-import Image from "next/image";
-import { useTheme } from "next-themes";
-import * as React from "react";
+import { cn } from "@/lib/utils";
 
 type TechIconProps = {
   alt: string;
-  lightSrc: string;
-  darkSrc: string;
-  fallbackSrc?: string;
+  icon?: Pick<SimpleIcon, "path" | "hex" | "source" | "slug" | "title"> & { viewBox?: string };
   className?: string;
   width?: number;
   height?: number;
+  monochrome?: boolean;
 };
 
 export function TechIcon({
   alt,
-  lightSrc,
-  darkSrc,
-  fallbackSrc,
+  icon,
   className,
   width = 24,
   height = 24,
+  monochrome = false,
 }: TechIconProps) {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-  const [src, setSrc] = React.useState<string>(lightSrc);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  React.useEffect(() => {
-    const nextSrc = mounted && resolvedTheme === "dark" ? darkSrc : lightSrc;
-    setSrc(nextSrc);
-  }, [mounted, resolvedTheme, lightSrc, darkSrc]);
-
-  const handleError = () => {
-    if (fallbackSrc && src !== fallbackSrc) {
-      setSrc(fallbackSrc);
-    }
-  };
+  if (!icon) {
+    return null;
+  }
 
   return (
-    <Image
-      src={src}
-      alt={alt}
+    <svg
+      viewBox={icon.viewBox ?? "0 0 24 24"}
+      role="img"
+      aria-hidden="true"
+      aria-label={alt}
+      className={cn(className)}
       width={width}
       height={height}
-      className={className}
-      onError={handleError}
-      unoptimized
-    />
+    >
+      <path d={icon.path} fill={monochrome ? "currentColor" : `#${icon.hex}`} />
+    </svg>
   );
 }

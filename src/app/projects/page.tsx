@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import {
-  compactClass,
   SectionBody,
   SectionHeader,
   SectionItemCard,
@@ -33,6 +33,26 @@ export const metadata: Metadata = {
   },
 };
 
+function SectionText({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <p className={`text-foreground/90 text-sm leading-7 ${className}`.trim()}>{children}</p>;
+}
+
+function SectionLabel({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <p className={`text-sm font-medium ${className}`.trim()}>{children}</p>;
+}
+
+function SectionList({ items, className = "" }: { items: string[]; className?: string }) {
+  if (items.length === 0) return null;
+
+  return (
+    <ul className={`text-foreground/90 list-disc space-y-2 pl-5 text-sm ${className}`.trim()}>
+      {items.map((detail, index) => (
+        <li key={`${detail}-${index}`}>{detail}</li>
+      ))}
+    </ul>
+  );
+}
+
 function isExternalHref(href: string) {
   try {
     const url = new URL(href);
@@ -40,6 +60,66 @@ function isExternalHref(href: string) {
   } catch {
     return false;
   }
+}
+
+type ParsedDate = {
+  year: number;
+  monthIndex: number;
+};
+
+const MONTH_INDEX: Record<string, number> = {
+  Jan: 0,
+  Feb: 1,
+  Mar: 2,
+  Apr: 3,
+  May: 4,
+  Jun: 5,
+  Jul: 6,
+  Aug: 7,
+  Sep: 8,
+  Oct: 9,
+  Nov: 10,
+  Dec: 11,
+};
+
+function parsePeriodStart(period: string): ParsedDate | null {
+  const normalizedPeriod = period.replace(/\s*-\s*/g, " - ").trim();
+  const start = normalizedPeriod.split(" - ")[0]?.trim();
+  if (!start) return null;
+
+  const splitParts = start.split(" ").filter(Boolean);
+  if (splitParts.length === 1) {
+    const yearOnly = Number.parseInt(splitParts[0], 10);
+    if (!Number.isFinite(yearOnly)) return null;
+
+    return { year: yearOnly, monthIndex: 0 };
+  }
+
+  const [monthRaw, yearRaw] = splitParts;
+  if (!monthRaw || !yearRaw) return null;
+
+  const month = monthRaw.charAt(0).toUpperCase() + monthRaw.slice(1).toLowerCase();
+  const monthIndex = MONTH_INDEX[month as keyof typeof MONTH_INDEX];
+  const parsedYear = Number.parseInt(yearRaw, 10);
+
+  if (!Number.isFinite(parsedYear) || monthIndex === undefined) return null;
+
+  return { year: parsedYear, monthIndex };
+}
+
+function isAfter(a: ParsedDate, b: ParsedDate): boolean {
+  if (a.year !== b.year) return a.year > b.year;
+  return a.monthIndex > b.monthIndex;
+}
+
+function isMostRecentPeriod(indexA: number, indexB: number, list: typeof projects): boolean {
+  const parsedA = parsePeriodStart(list[indexA]?.period ?? "");
+  const parsedB = parsePeriodStart(list[indexB]?.period ?? "");
+
+  if (!parsedA) return false;
+  if (!parsedB) return true;
+
+  return isAfter(parsedA, parsedB);
 }
 
 function shouldUseCarousel(images: { src: string; alt: string }[]) {
@@ -147,14 +227,25 @@ function ProjectMedia({
 }
 
 export default function ProjectsPage() {
+  const mostRecentProjectIndex = projects.reduce(
+    (mostRecent, _, currentIndex) =>
+      isMostRecentPeriod(currentIndex, mostRecent, projects) ? currentIndex : mostRecent,
+    0
+  );
+  const defaultOpenProject = projects.length > 0 ? `project-${mostRecentProjectIndex}` : undefined;
+
   return (
     <section className="space-y-6 text-left">
       <SectionLeadPanel
         title="Projects"
-        description="Selected work focused on reliable systems, practical product design, and measurable outcomes."
+        description="Selected work focused on reliable systems, practical product design, and real engineering challenges."
       />
 
-      <Accordion type="single" collapsible className="space-y-4">
+      <Accordion
+        type="multiple"
+        defaultValue={defaultOpenProject ? [defaultOpenProject] : []}
+        className="space-y-4"
+      >
         {projects.map((project, projectIndex) => (
           <SectionItemCard key={project.title}>
             <AccordionItem value={`project-${projectIndex}`} className="border-none">
@@ -163,18 +254,9 @@ export default function ProjectsPage() {
                   <div className="w-full space-y-2 text-left">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <CardTitle className="text-xl leading-tight">{project.title}</CardTitle>
-                      {project.status ? (
-                        <Badge variant="outline" className="rounded-full">
-                          {project.status}
-                        </Badge>
-                      ) : null}
+                      {project.teamType ? <Badge>{project.teamType}</Badge> : null}
                     </div>
-                    <p className="text-muted-foreground text-sm">
-                      {project.company}
-                      {project.period ? ` | ${project.period}` : ""}
-                      {project.type ? ` | ${project.type}` : ""}
-                    </p>
-                    <p className="text-foreground/90 text-sm leading-7">{project.summary}</p>
+                    <p className="text-muted-foreground text-sm">{project.period}</p>
                     <div className="flex flex-wrap gap-2">
                       {project.stack.map((item) => (
                         <Badge key={`${project.title}-${item}`} variant="secondary">
@@ -186,42 +268,38 @@ export default function ProjectsPage() {
                 </AccordionTrigger>
               </SectionHeader>
               <AccordionContent>
-                <SectionBody>
+                <SectionBody className="space-y-4">
+                  <SectionText>{project.summary}</SectionText>
+
+                  {project.description.split("\n\n").map((paragraph, index) => (
+                    <SectionText
+                      key={`${project.title}-description-${index}`}
+                      className={index === 0 ? "mt-4" : "mt-2"}
+                    >
+                      {paragraph}
+                    </SectionText>
+                  ))}
+
                   {project.images ? (
-                    <div className="space-y-4">
-                      <ProjectMedia images={project.images} demoVideoUrl={project.demoVideoUrl} />
-                    </div>
+                    <ProjectMedia images={project.images} demoVideoUrl={project.demoVideoUrl} />
                   ) : (
                     <ProjectMedia images={[]} demoVideoUrl={project.demoVideoUrl} />
                   )}
 
-                  <p
-                    className={`text-foreground/90 ${compactClass(project, "mt-4", "mt-1")} text-sm leading-7`}
-                  >
-                    {project.description}
-                  </p>
-                  <ul
-                    className={`text-foreground/90 ${compactClass(project, "mt-3", "mt-2")} list-disc ${compactClass(
-                      project,
-                      "space-y-2",
-                      "space-y-1"
-                    )} pl-5 text-sm`}
-                  >
-                    {project.details.map((detail) => (
-                      <li key={`${project.title}-${detail}`}>{detail}</li>
-                    ))}
-                  </ul>
-                  <ul
-                    className={`text-foreground/90 ${compactClass(project, "mt-3", "mt-2")} list-disc ${compactClass(
-                      project,
-                      "space-y-2",
-                      "space-y-1"
-                    )} pl-5 text-sm`}
-                  >
-                    {project.highlights.map((highlight) => (
-                      <li key={`${project.title}-${highlight}`}>{highlight}</li>
-                    ))}
-                  </ul>
+                  {project.role ? <SectionText className="mt-3">{project.role}</SectionText> : null}
+
+                  <SectionList items={project.details} className="mt-3" />
+
+                  {project.engineeringChallenge ? (
+                    <>
+                      <SectionLabel className="mt-4">Engineering challenge</SectionLabel>
+                      <SectionText className="mt-2">{project.engineeringChallenge}</SectionText>
+                    </>
+                  ) : null}
+
+                  {project.highlights.length ? (
+                    <SectionList items={project.highlights} className="mt-3" />
+                  ) : null}
 
                   <div className="mt-4 flex flex-wrap items-center gap-3">
                     {isExternalHref(project.repoUrl) ? (

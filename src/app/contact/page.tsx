@@ -21,7 +21,8 @@ export default function ContactPage() {
         <CardHeader className="pb-3">
           <CardTitle>Contact</CardTitle>
           <p className="text-muted-foreground text-sm">
-            Reach out for collaboration, software engineering opportunities, or project inquiries.
+            Feel free to reach out for software engineering opportunities, collaboration, or project
+            inquiries.
           </p>
         </CardHeader>
       </Card>

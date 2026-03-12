@@ -6,6 +6,7 @@ import {
   SectionItemCard,
   SectionLeadPanel,
 } from "@/components/page-section";
+import { TimelineMarker } from "@/components/timeline-marker";
 import {
   Accordion,
   AccordionContent,
@@ -114,7 +115,7 @@ export default function CareerPage() {
     <section className="space-y-6 text-left">
       <SectionLeadPanel
         title="Career"
-        description="Product focused software engineering experience across fintech, backend systems, and operational reliability."
+        description="Experience building reliable backend systems and fintech infrastructure."
       />
 
       {companies.map((companyData, companyIndex) => {
@@ -123,24 +124,30 @@ export default function CareerPage() {
         );
         const defaultValue =
           defaultOpenRoleIndex >= 0 ? `company-${companyIndex}-${defaultOpenRoleIndex}` : undefined;
+        const companyWorkMode =
+          companyData.roles.find((roleWithIndex) => roleWithIndex.role.workMode)?.role.workMode ??
+          null;
 
         return (
           <SectionItemCard key={`${companyData.company}-${companyIndex}`}>
             <SectionHeader>
-              <CardTitle>
-                {companyData.roles.length > 0 && companyData.roles[0].role.companyUrl ? (
-                  <a
-                    href={companyData.roles[0].role.companyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline"
-                  >
-                    {companyData.company}
-                  </a>
-                ) : (
-                  companyData.company
-                )}
-              </CardTitle>
+              <div className="flex items-start justify-between gap-2">
+                <CardTitle>
+                  {companyData.roles.length > 0 && companyData.roles[0].role.companyUrl ? (
+                    <a
+                      href={companyData.roles[0].role.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      {companyData.company}
+                    </a>
+                  ) : (
+                    companyData.company
+                  )}
+                </CardTitle>
+                {companyWorkMode ? <Badge>{companyWorkMode}</Badge> : null}
+              </div>
             </SectionHeader>
 
             <SectionBody>
@@ -154,30 +161,26 @@ export default function CareerPage() {
                     key={`${role.role.company}-${role.role.role}-${role.role.period}-${role.originalIndex}`}
                     className="flex items-stretch gap-4"
                   >
-                    <div className="flex w-4 flex-col items-center">
-                      <span className="bg-background border-border mt-2 h-3 w-3 rounded-full border" />
-                      {roleIndex < companyData.roles.length - 1 ? (
-                        <span className="bg-border mt-2 -mb-4 w-px flex-1" />
-                      ) : null}
-                    </div>
+                    <TimelineMarker isLast={roleIndex >= companyData.roles.length - 1} />
                     <AccordionItem
                       value={`company-${companyIndex}-${roleIndex}`}
                       className="w-full border-none"
                     >
                       <AccordionTrigger className="group w-full justify-start gap-3 px-0 py-0 hover:no-underline">
                         <div className="w-full space-y-2 text-left">
-                          <div>
-                            <CardTitle className="text-lg leading-tight">
-                              {role.role.role}
-                            </CardTitle>
+                          <div className="flex flex-col gap-2">
+                            <div className="flex items-start justify-between gap-2">
+                              <CardTitle className="text-lg leading-tight">
+                                {role.role.role}
+                              </CardTitle>
+                            </div>
                             <p className="text-muted-foreground mt-0.5 text-sm">
                               {role.role.period}
-                              {role.role.location ? ` | ${role.role.location}` : ""}
                             </p>
                           </div>
                           <div className="flex flex-wrap gap-2">
                             {role.role.technologies.map((technology) => (
-                              <Badge key={technology} variant="outline">
+                              <Badge key={technology} variant="secondary">
                                 {technology}
                               </Badge>
                             ))}
