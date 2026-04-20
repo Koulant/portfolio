@@ -31,6 +31,12 @@ export const metadata: Metadata = {
   title: {
     absolute: "Projects | Anton Koulikov",
   },
+  openGraph: {
+    title: "Projects | Anton Koulikov",
+    description:
+      "Software projects built by Anton Koulikov, spanning backend systems and full-stack web development.",
+    url: "https://koulant.com/projects",
+  },
 };
 
 function SectionText({ children, className = "" }: { children: ReactNode; className?: string }) {

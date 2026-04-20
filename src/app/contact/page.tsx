@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: {
     absolute: "Contact | Anton Koulikov",
   },
+  openGraph: {
+    title: "Contact | Anton Koulikov",
+    description:
+      "Get in touch with Anton Koulikov for software engineering opportunities, collaboration, or project inquiries.",
+    url: "https://koulant.com/contact",
+  },
 };
 
 export default function ContactPage() {
