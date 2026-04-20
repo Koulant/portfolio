@@ -44,16 +44,6 @@ export async function POST(request: Request) {
     );
   }
 
-  const ip = getClientIp(request);
-  const { success } = await ratelimit.limit(ip);
-
-  if (!success) {
-    return NextResponse.json(
-      { error: "You've already sent a message today. Please try again tomorrow." },
-      { status: 429 }
-    );
-  }
-
   let payload: ContactPayload;
   try {
     payload = (await request.json()) as ContactPayload;
@@ -85,6 +75,16 @@ export async function POST(request: Request) {
 
   if (!message || message.length > MESSAGE_MAX_LENGTH) {
     return NextResponse.json({ error: "Message is invalid." }, { status: 400 });
+  }
+
+  const ip = getClientIp(request);
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "You've already sent a message today. Please try again tomorrow." },
+      { status: 429 }
+    );
   }
 
   const senderName = `${firstName} ${lastName}`.trim();
