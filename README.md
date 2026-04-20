@@ -4,12 +4,12 @@ Personal portfolio site built with Next.js 16, React 19, and TypeScript. Live at
 
 ## Stack
 
-- **Framework** — Next.js 16 (App Router)
-- **UI** — shadcn/ui, Tailwind CSS 4
-- **Forms** — React Hook Form, Zod
-- **Email** — Resend
-- **Rate limiting** — Upstash Redis
-- **Deployment** — Vercel
+- **Framework** - Next.js 16 (App Router)
+- **UI** - shadcn/ui, Tailwind CSS 4
+- **Forms** - React Hook Form, Zod
+- **Email** - Resend
+- **Rate limiting** - Upstash Redis
+- **Deployment** - Vercel
 - **CI/CD** - GitHub Actions
 
 ## Pages
@@ -29,6 +29,19 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
+| `npm run lint:fix` | Run ESLint and auto-fix |
+| `npm run format` | Format all files with Prettier |
+| `npm run format:check` | Check formatting without writing |
+| `npm run typecheck` | TypeScript type check |
 
 ## Environment Variables
 
