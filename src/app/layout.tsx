@@ -51,7 +51,7 @@ export default function RootLayout({
             </main>
             <SiteFooter />
           </div>
-          <Toaster/>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

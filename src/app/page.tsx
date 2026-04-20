@@ -3,13 +3,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { siGithub } from "simple-icons";
 import type { SimpleIcon } from "simple-icons";
+import { siGithub } from "simple-icons";
 
 import { CurrentTime } from "@/components/current-time";
 import { RoleScroller } from "@/components/role-scroller";
-import { TechStack } from "@/components/tech-stack";
 import { TechIcon } from "@/components/tech_icon";
+import { TechStack } from "@/components/tech-stack";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

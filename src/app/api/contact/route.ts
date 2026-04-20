@@ -34,8 +34,7 @@ function getClientIp(request: Request): string {
 export async function POST(request: Request) {
   const resendApiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL;
-  const fromEmail =
-    process.env.CONTACT_FROM_EMAIL ?? "Portfolio Contact <onboarding@resend.dev>";
+  const fromEmail = process.env.CONTACT_FROM_EMAIL ?? "Portfolio Contact <onboarding@resend.dev>";
 
   if (!resendApiKey || !toEmail) {
     return NextResponse.json(

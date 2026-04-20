@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { SimpleIcon } from "simple-icons";
 import {
   siAuth0,
@@ -21,7 +22,6 @@ import {
   siTailwindcss,
   siTypescript,
 } from "simple-icons";
-import Image from "next/image";
 
 import { TechIcon } from "@/components/tech_icon";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -51,7 +51,8 @@ function getTechIconUrl(tech: string): TechIconConfig {
   const normalized = tech.toLowerCase();
 
   if (normalized.includes("python")) return { icon: siPython };
-  if (normalized.includes("c#") || normalized.includes("csharp")) return { src: "/icons/c_sharp.svg" };
+  if (normalized.includes("c#") || normalized.includes("csharp"))
+    return { src: "/icons/c_sharp.svg" };
   if (normalized.includes("next.js") || normalized.includes("nextjs")) return { icon: siNextdotjs };
   if (normalized.includes("react native")) return { icon: siReact };
   if (normalized.includes("react")) return { icon: siReact };
@@ -61,11 +62,13 @@ function getTechIconUrl(tech: string): TechIconConfig {
   if (normalized.includes("django")) return { icon: siDjango };
   if (normalized.includes("celery")) return { icon: siCelery };
   if (normalized.includes("go")) return { icon: siGo };
-  if (normalized.includes("postgresql") || normalized.includes("postgres")) return { icon: siPostgresql };
+  if (normalized.includes("postgresql") || normalized.includes("postgres"))
+    return { icon: siPostgresql };
   if (normalized.includes("tailwind")) return { icon: siTailwindcss };
   if (normalized.includes("shadcn")) return { icon: siShadcnui };
   if (normalized.includes("docker")) return { icon: siDocker };
-  if (normalized.includes("aws") || normalized.includes("amazon web services")) return { src: "/icons/aws.svg" };
+  if (normalized.includes("aws") || normalized.includes("amazon web services"))
+    return { src: "/icons/aws.svg" };
   if (normalized.includes("pulumi")) return { icon: siPulumi };
   if (normalized.includes("datadog")) return { icon: siDatadog };
   if (normalized.includes("git")) return { icon: siGit };
@@ -89,8 +92,7 @@ export function TechStack({ sections }: { sections: StackSection[] }) {
                 const iconSources = getTechIconUrl(tech.label);
                 if (!iconSources.icon && !iconSources.src) return null;
 
-                const tooltipLabel =
-                  tech.aliases.length > 1 ? tech.aliases.join(", ") : tech.label;
+                const tooltipLabel = tech.aliases.length > 1 ? tech.aliases.join(", ") : tech.label;
 
                 return (
                   <Tooltip key={tech.label}>

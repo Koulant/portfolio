@@ -14,12 +14,12 @@ Personal portfolio site built with Next.js 16, React 19, and TypeScript. Live at
 
 ## Pages
 
-| Route | Description |
-|-------|-------------|
-| `/` | About, social links, tech stack |
-| `/career` | Work history and experience timeline |
-| `/projects` | Project showcase with carousel |
-| `/contact` | Contact form with email delivery |
+| Route       | Description                          |
+| ----------- | ------------------------------------ |
+| `/`         | About, social links, tech stack      |
+| `/career`   | Work history and experience timeline |
+| `/projects` | Project showcase with carousel       |
+| `/contact`  | Contact form with email delivery     |
 
 ## Getting Started
 
@@ -32,16 +32,16 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Production build |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Run ESLint and auto-fix |
-| `npm run format` | Format all files with Prettier |
+| Command                | Description                      |
+| ---------------------- | -------------------------------- |
+| `npm run dev`          | Start development server         |
+| `npm run build`        | Production build                 |
+| `npm run start`        | Start production server          |
+| `npm run lint`         | Run ESLint                       |
+| `npm run lint:fix`     | Run ESLint and auto-fix          |
+| `npm run format`       | Format all files with Prettier   |
 | `npm run format:check` | Check formatting without writing |
-| `npm run typecheck` | TypeScript type check |
+| `npm run typecheck`    | TypeScript type check            |
 
 ## Environment Variables
 
@@ -56,13 +56,13 @@ UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
 ```
 
-| Variable | Description |
-|----------|-------------|
-| `RESEND_API_KEY` | Resend API key for email delivery |
-| `CONTACT_TO_EMAIL` | Address that receives contact form submissions |
-| `CONTACT_FROM_EMAIL` | Sender address (must be on a verified Resend domain) |
-| `UPSTASH_REDIS_REST_URL` | Upstash Redis REST URL for rate limiting |
-| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST token |
+| Variable                   | Description                                          |
+| -------------------------- | ---------------------------------------------------- |
+| `RESEND_API_KEY`           | Resend API key for email delivery                    |
+| `CONTACT_TO_EMAIL`         | Address that receives contact form submissions       |
+| `CONTACT_FROM_EMAIL`       | Sender address (must be on a verified Resend domain) |
+| `UPSTASH_REDIS_REST_URL`   | Upstash Redis REST URL for rate limiting             |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST token                             |
 
 ## Contact Form
 

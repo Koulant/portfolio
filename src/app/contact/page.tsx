@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-
   return (
     <section className="space-y-6 text-left">
       <Card>
@@ -40,7 +39,6 @@ export default function ContactPage() {
           <ContactForm />
         </CardContent>
       </Card>
-
     </section>
   );
 }

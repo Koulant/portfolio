@@ -24,8 +24,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Career | Anton Koulikov",
-    description:
-      "Professional experience and career history of Anton Koulikov, software engineer.",
+    description: "Professional experience and career history of Anton Koulikov, software engineer.",
     url: "https://koulant.com/career",
   },
 };
