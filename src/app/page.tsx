@@ -6,8 +6,8 @@ import type { ReactNode } from "react";
 import { siGithub } from "simple-icons";
 import type { SimpleIcon } from "simple-icons";
 
-import { CurrentTime } from "@/components/current_time";
-import { RoleScroller } from "@/components/role_scroller";
+import { CurrentTime } from "@/components/current-time";
+import { RoleScroller } from "@/components/role-scroller";
 import { TechStack } from "@/components/tech-stack";
 import { TechIcon } from "@/components/tech_icon";
 import { Badge } from "@/components/ui/badge";

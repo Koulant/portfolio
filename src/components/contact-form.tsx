@@ -129,6 +129,7 @@ export function ContactForm() {
               type="email"
               placeholder="Your email address"
               autoComplete="email"
+              aria-required="true"
               aria-invalid={fieldState.invalid}
               className="border-input placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-ring/50 h-11 w-full rounded-md border bg-transparent px-3 text-sm transition-colors outline-none focus-visible:ring-[3px]"
             />

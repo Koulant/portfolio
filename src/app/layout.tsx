@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { ThemeProvider } from "@/components/theme_provider";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://koulant.com"),
