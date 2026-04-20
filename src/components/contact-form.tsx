@@ -86,6 +86,7 @@ export function ContactForm() {
                 type="text"
                 placeholder="Your first name"
                 autoComplete="given-name"
+                aria-required="true"
                 aria-invalid={fieldState.invalid}
                 className="border-input placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-ring/50 h-11 w-full rounded-md border bg-transparent px-3 text-sm transition-colors outline-none focus-visible:ring-[3px]"
               />
@@ -106,6 +107,7 @@ export function ContactForm() {
                 type="text"
                 placeholder="Your last name"
                 autoComplete="family-name"
+                aria-required="true"
                 aria-invalid={fieldState.invalid}
                 className="border-input placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-ring/50 h-11 w-full rounded-md border bg-transparent px-3 text-sm transition-colors outline-none focus-visible:ring-[3px]"
               />
@@ -146,6 +148,7 @@ export function ContactForm() {
               id={field.name}
               placeholder="Enter your message here..."
               rows={6}
+              aria-required="true"
               aria-invalid={fieldState.invalid}
               className="border-input placeholder:text-muted-foreground/80 focus-visible:border-ring focus-visible:ring-ring/50 w-full rounded-md border bg-transparent px-3 py-2.5 text-sm transition-colors outline-none focus-visible:ring-[3px]"
             />

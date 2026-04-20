@@ -98,7 +98,6 @@ export function TechStack({ sections }: { sections: StackSection[] }) {
                       <span aria-label={tooltipLabel} className={TECHNOLOGY_ICON_CLASS}>
                         {iconSources.icon ? (
                           <TechIcon
-                            alt={tech.label}
                             icon={iconSources.icon}
                             width={24}
                             height={24}

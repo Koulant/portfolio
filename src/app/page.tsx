@@ -199,7 +199,6 @@ export default function HomePage() {
                       <span className={SOCIAL_ICON_CLASS}>
                         {socialIcon.type === "simple" ? (
                           <TechIcon
-                            alt={link.label}
                             icon={socialIcon.icon}
                             width={SOCIAL_ICON_SIZE}
                             height={SOCIAL_ICON_SIZE}
@@ -217,7 +216,6 @@ export default function HomePage() {
                       <span className={SOCIAL_ICON_CLASS}>
                         {socialIcon.type === "simple" ? (
                           <TechIcon
-                            alt={link.label}
                             icon={socialIcon.icon}
                             width={SOCIAL_ICON_SIZE}
                             height={SOCIAL_ICON_SIZE}

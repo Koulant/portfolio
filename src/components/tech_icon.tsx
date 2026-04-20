@@ -3,7 +3,6 @@ import type { SimpleIcon } from "simple-icons";
 import { cn } from "@/lib/utils";
 
 type TechIconProps = {
-  alt: string;
   icon?: Pick<SimpleIcon, "path" | "hex" | "source" | "slug" | "title"> & { viewBox?: string };
   className?: string;
   width?: number;
@@ -12,7 +11,6 @@ type TechIconProps = {
 };
 
 export function TechIcon({
-  alt,
   icon,
   className,
   width = 24,
@@ -26,9 +24,7 @@ export function TechIcon({
   return (
     <svg
       viewBox={icon.viewBox ?? "0 0 24 24"}
-      role="img"
       aria-hidden="true"
-      aria-label={alt}
       className={cn(className)}
       width={width}
       height={height}
