@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Anton Koulikov — Portfolio
+
+Personal portfolio site built with Next.js 16, React 19, and TypeScript. Live at [koulant.com](https://koulant.com).
+
+## Stack
+
+- **Framework** - Next.js 16 (App Router)
+- **UI** - shadcn/ui, Tailwind CSS 4
+- **Forms** - React Hook Form, Zod
+- **Email** - Resend
+- **Rate limiting** - Upstash Redis
+- **Deployment** - Vercel
+- **CI/CD** - GitHub Actions
+
+## Pages
+
+| Route       | Description                          |
+| ----------- | ------------------------------------ |
+| `/`         | About, social links, tech stack      |
+| `/career`   | Work history and experience timeline |
+| `/projects` | Project showcase with carousel       |
+| `/contact`  | Contact form with email delivery     |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command                | Description                      |
+| ---------------------- | -------------------------------- |
+| `npm run dev`          | Start development server         |
+| `npm run build`        | Production build                 |
+| `npm run start`        | Start production server          |
+| `npm run lint`         | Run ESLint                       |
+| `npm run lint:fix`     | Run ESLint and auto-fix          |
+| `npm run format`       | Format all files with Prettier   |
+| `npm run format:check` | Check formatting without writing |
+| `npm run typecheck`    | TypeScript type check            |
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file with the following:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=
+CONTACT_FROM_EMAIL=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+```
 
-## Deploy on Vercel
+| Variable                   | Description                                          |
+| -------------------------- | ---------------------------------------------------- |
+| `RESEND_API_KEY`           | Resend API key for email delivery                    |
+| `CONTACT_TO_EMAIL`         | Address that receives contact form submissions       |
+| `CONTACT_FROM_EMAIL`       | Sender address (must be on a verified Resend domain) |
+| `UPSTASH_REDIS_REST_URL`   | Upstash Redis REST URL for rate limiting             |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST token                             |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contact Form
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The `/api/contact` route applies the following protections:
+
+- Honeypot field — silently discards bot submissions
+- Server-side validation — mirrors client Zod schema
+- Rate limiting — 1 submission per IP per 24 hours via Upstash sliding window

@@ -6,7 +6,7 @@ import { NavigationMenu } from "@/components/ui/navigation-menu";
 import { navLinks } from "@/config/navigation";
 
 import { SiteLinks } from "./site-links";
-import { ThemeToggle } from "./theme_toggle";
+import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader() {
   const pathname = usePathname();

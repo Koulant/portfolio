@@ -1,21 +1,37 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { ThemeProvider } from "@/components/theme_provider";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://koulant.com"),
   title: {
     default: "Anton Koulikov",
     template: "%s | Anton Koulikov",
   },
   description:
-    "Portfolio site for Anton Koulikov, a software engineer focused on backend systems and full-stack delivery.",
+    "Software engineer focused on building reliable backend systems and practical full-stack software.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
+  },
+  openGraph: {
+    title: "Anton Koulikov",
+    description:
+      "Software engineer focused on building reliable backend systems and practical full-stack software.",
+    url: "https://koulant.com",
+    siteName: "Anton Koulikov",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Anton Koulikov",
+    description:
+      "Software engineer focused on building reliable backend systems and practical full-stack software.",
   },
 };
 
@@ -35,6 +51,7 @@ export default function RootLayout({
             </main>
             <SiteFooter />
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

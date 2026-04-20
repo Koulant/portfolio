@@ -4,40 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { SimpleIcon } from "simple-icons";
-import {
-  siAuth0,
-  siCelery,
-  siDatadog,
-  siDjango,
-  siDocker,
-  siFirebase,
-  siGit,
-  siGithub,
-  siGo,
-  siJavascript,
-  siLinux,
-  siNextdotjs,
-  siPostgresql,
-  siPulumi,
-  siPython,
-  siReact,
-  siShadcnui,
-  siTailwindcss,
-  siTypescript,
-} from "simple-icons";
+import { siGithub } from "simple-icons";
 
-import { CurrentTime } from "@/components/current_time";
-import { RoleScroller } from "@/components/role_scroller";
-import { TechIcon } from "@/components/tech_icon";
+import { CurrentTime } from "@/components/current-time";
+import { RoleScroller } from "@/components/role-scroller";
+import { TechIcon } from "@/components/tech-icon";
+import { TechStack } from "@/components/tech-stack";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { profile } from "@/data/profile";
 
 export const metadata: Metadata = {
   title: {
     absolute: "About | Anton Koulikov",
+  },
+  openGraph: {
+    title: "About | Anton Koulikov",
+    description:
+      "Software engineer focused on building reliable backend systems and practical full-stack software.",
+    url: "https://koulant.com",
   },
 };
 
@@ -47,12 +33,6 @@ const SOCIAL_ICON_CLASS =
 const SOCIAL_ICON_CLASSNAME = "size-6 text-foreground/80 transition-colors";
 const SOCIAL_BRAND_ICON_CLASSNAME = "size-6 text-foreground/80 transition-colors fill-current";
 const SOCIAL_ICON_SIZE = 24;
-const TECHNOLOGY_ICON_CLASS =
-  "inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full transition-colors group";
-const TECHNOLOGY_ICON_CLASSNAME =
-  "h-8 w-8 text-foreground/80 transition-colors group-hover:text-foreground fill-current";
-const TECHNOLOGY_IMAGE_CLASS = "h-8 w-8 object-contain";
-
 type BrandIcon = Omit<SimpleIcon, "license" | "guidelines" | "svg"> & { viewBox?: string };
 type SocialIconConfig = { type: "simple"; icon: BrandIcon } | { type: "svg"; node: ReactNode };
 
@@ -70,11 +50,6 @@ const LOCAL_SOCIAL_ICONS: Record<string, BrandIcon> = {
 function asBrandIcon(icon: SimpleIcon): BrandIcon {
   return { ...icon, viewBox: "0 0 24 24" };
 }
-type TechIconConfig = {
-  icon?: SimpleIcon;
-  src?: string;
-};
-
 function getSocialIcon(label: string): SocialIconConfig {
   const normalized = label.toLowerCase();
 
@@ -101,152 +76,6 @@ function getSocialIcon(label: string): SocialIconConfig {
   }
 
   return { type: "simple", icon: asBrandIcon(siGithub) };
-}
-
-function getTechIconUrl(tech: string): TechIconConfig {
-  const normalized = tech.toLowerCase();
-
-  if (normalized.includes("python")) {
-    return {
-      icon: siPython,
-    };
-  }
-
-  if (normalized.includes("c#") || normalized.includes("csharp")) {
-    return {
-      src: "/icons/c_sharp.svg",
-    };
-  }
-
-  if (normalized.includes("next.js") || normalized.includes("nextjs")) {
-    return {
-      icon: siNextdotjs,
-    };
-  }
-
-  if (normalized.includes("react native")) {
-    return {
-      icon: siReact,
-    };
-  }
-
-  if (normalized.includes("react")) {
-    return {
-      icon: siReact,
-    };
-  }
-
-  if (normalized.includes("typescript")) {
-    return {
-      icon: siTypescript,
-    };
-  }
-
-  if (normalized.includes("javascript")) {
-    return {
-      icon: siJavascript,
-    };
-  }
-
-  if (normalized.includes("java")) {
-    return {
-      src: "/icons/java.svg",
-    };
-  }
-
-  if (normalized.includes("django")) {
-    return {
-      icon: siDjango,
-    };
-  }
-
-  if (normalized.includes("celery")) {
-    return {
-      icon: siCelery,
-    };
-  }
-
-  if (normalized.includes("go")) {
-    return {
-      icon: siGo,
-    };
-  }
-
-  if (normalized.includes("postgresql") || normalized.includes("postgres")) {
-    return {
-      icon: siPostgresql,
-    };
-  }
-
-  if (normalized.includes("tailwind")) {
-    return {
-      icon: siTailwindcss,
-    };
-  }
-
-  if (normalized.includes("shadcn")) {
-    return {
-      icon: siShadcnui,
-    };
-  }
-
-  if (normalized.includes("docker")) {
-    return {
-      icon: siDocker,
-    };
-  }
-
-  if (normalized.includes("aws") || normalized.includes("amazon web services")) {
-    return {
-      src: "/icons/aws.svg",
-    };
-  }
-
-  if (normalized.includes("pulumi")) {
-    return {
-      icon: siPulumi,
-    };
-  }
-
-  if (normalized.includes("datadog")) {
-    return {
-      icon: siDatadog,
-    };
-  }
-
-  if (normalized.includes("git")) {
-    return {
-      icon: siGit,
-    };
-  }
-
-  if (normalized.includes("linux")) {
-    return {
-      icon: siLinux,
-    };
-  }
-
-  if (normalized.includes("firebase")) {
-    return {
-      icon: siFirebase,
-    };
-  }
-
-  if (normalized.includes("firestore")) {
-    return {
-      icon: siFirebase,
-    };
-  }
-
-  if (normalized.includes("auth0")) {
-    return {
-      icon: siAuth0,
-    };
-  }
-
-  return {
-    icon: undefined,
-  };
 }
 
 export default function HomePage() {
@@ -370,7 +199,6 @@ export default function HomePage() {
                       <span className={SOCIAL_ICON_CLASS}>
                         {socialIcon.type === "simple" ? (
                           <TechIcon
-                            alt={link.label}
                             icon={socialIcon.icon}
                             width={SOCIAL_ICON_SIZE}
                             height={SOCIAL_ICON_SIZE}
@@ -388,7 +216,6 @@ export default function HomePage() {
                       <span className={SOCIAL_ICON_CLASS}>
                         {socialIcon.type === "simple" ? (
                           <TechIcon
-                            alt={link.label}
                             icon={socialIcon.icon}
                             width={SOCIAL_ICON_SIZE}
                             height={SOCIAL_ICON_SIZE}
@@ -426,56 +253,7 @@ export default function HomePage() {
           <CardTitle>Stack</CardTitle>
         </CardHeader>
         <CardContent>
-          <TooltipProvider>
-            <div className="space-y-4">
-              {stackSections.map((section) => (
-                <div key={section.title} className="space-y-2">
-                  <h3 className="text-muted-foreground text-sm font-medium">{section.title}</h3>
-                  <div className="flex flex-wrap items-center gap-2">
-                    {section.technologies.map((tech) => {
-                      const iconSources = getTechIconUrl(tech.label);
-                      if (!iconSources.icon && !iconSources.src) {
-                        return null;
-                      }
-
-                      const tooltipLabel =
-                        tech.aliases.length > 1 ? tech.aliases.join(", ") : tech.label;
-
-                      return (
-                        <Tooltip key={tech.label}>
-                          <TooltipTrigger asChild>
-                            <span aria-label={tooltipLabel} className={TECHNOLOGY_ICON_CLASS}>
-                              {iconSources.icon ? (
-                                <TechIcon
-                                  alt={tech.label}
-                                  icon={iconSources.icon}
-                                  width={24}
-                                  height={24}
-                                  className={TECHNOLOGY_ICON_CLASSNAME}
-                                  monochrome
-                                />
-                              ) : (
-                                <Image
-                                  src={iconSources.src ?? ""}
-                                  alt={tech.label}
-                                  width={24}
-                                  height={24}
-                                  className={`${TECHNOLOGY_IMAGE_CLASS} brightness-0 grayscale dark:brightness-100 dark:invert`}
-                                />
-                              )}
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent side="bottom">
-                            <p className="font-medium">{tooltipLabel}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </TooltipProvider>
+          <TechStack sections={stackSections} />
         </CardContent>
       </Card>
     </section>

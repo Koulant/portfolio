@@ -29,7 +29,7 @@ export const profile: Profile = {
   ],
   location: "Calgary, Alberta, Canada",
   timezone: "America/Edmonton",
-  portraitUrl: "/images/portrait.jpg",
+  portraitUrl: "/images/portrait.webp",
   intro: [
     "Software engineer focused on building reliable backend systems and practical full stack software.",
     "Previously at Newton Crypto, where I helped build production fintech infrastructure supporting high volume transactions, financial reconciliation, and audit ready financial data.",
