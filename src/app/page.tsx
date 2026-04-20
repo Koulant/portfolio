@@ -8,7 +8,7 @@ import { siGithub } from "simple-icons";
 
 import { CurrentTime } from "@/components/current-time";
 import { RoleScroller } from "@/components/role-scroller";
-import { TechIcon } from "@/components/tech_icon";
+import { TechIcon } from "@/components/tech-icon";
 import { TechStack } from "@/components/tech-stack";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

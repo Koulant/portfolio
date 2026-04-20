@@ -23,7 +23,7 @@ import {
   siTypescript,
 } from "simple-icons";
 
-import { TechIcon } from "@/components/tech_icon";
+import { TechIcon } from "@/components/tech-icon";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type TechIconConfig = {
@@ -112,7 +112,7 @@ export function TechStack({ sections }: { sections: StackSection[] }) {
                             alt={tech.label}
                             width={24}
                             height={24}
-                            className={`${TECHNOLOGY_IMAGE_CLASS} brightness-0 grayscale dark:brightness-100 dark:invert`}
+                            className={`${TECHNOLOGY_IMAGE_CLASS} brightness-0 grayscale dark:brightness-100 dark:invert opacity-80 transition-opacity group-hover:opacity-100`}
                           />
                         )}
                       </span>
