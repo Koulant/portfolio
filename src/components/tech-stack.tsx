@@ -42,9 +42,8 @@ type StackSection = {
 };
 
 const TECHNOLOGY_ICON_CLASS =
-  "inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full transition-colors group";
-const TECHNOLOGY_ICON_CLASSNAME =
-  "h-8 w-8 text-foreground/80 transition-colors group-hover:text-foreground fill-current";
+  "inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full opacity-80 transition-opacity hover:opacity-100";
+const TECHNOLOGY_ICON_CLASSNAME = "h-8 w-8 fill-current";
 const TECHNOLOGY_IMAGE_CLASS = "h-8 w-8 object-contain";
 
 function getTechIconUrl(tech: string): TechIconConfig {
@@ -82,7 +81,7 @@ function getTechIconUrl(tech: string): TechIconConfig {
 
 export function TechStack({ sections }: { sections: StackSection[] }) {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={150}>
       <div className="space-y-4">
         {sections.map((section) => (
           <div key={section.title} className="space-y-2">
@@ -112,7 +111,7 @@ export function TechStack({ sections }: { sections: StackSection[] }) {
                             alt={tech.label}
                             width={24}
                             height={24}
-                            className={`${TECHNOLOGY_IMAGE_CLASS} brightness-0 grayscale dark:brightness-100 dark:invert opacity-80 transition-opacity group-hover:opacity-100`}
+                            className={`${TECHNOLOGY_IMAGE_CLASS} brightness-0 grayscale dark:brightness-100 dark:invert`}
                           />
                         )}
                       </span>
