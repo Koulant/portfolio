@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -35,6 +36,7 @@ export default function RootLayout({
             </main>
             <SiteFooter />
           </div>
+          <Toaster/>
         </ThemeProvider>
       </body>
     </html>

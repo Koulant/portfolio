@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -59,22 +60,14 @@ export function ContactForm() {
       const payload = (await response.json().catch(() => ({}))) as { error?: string };
 
       if (!response.ok) {
-        form.setError("root", {
-          type: "server",
-          message: payload.error ?? "Could not send your message. Please try again.",
-        });
+        toast.error(payload.error ?? "Could not send your message. Please try again.");
         return;
       }
 
       form.reset();
-      form.clearErrors("root");
-      form.setValue("company", "");
-      form.setFocus("firstName");
+      toast.success("Message sent. Thank you.");
     } catch {
-      form.setError("root", {
-        type: "server",
-        message: "Could not send your message. Please try again.",
-      });
+      toast.error("Could not send your message. Please try again.");
     }
   };
 
@@ -179,13 +172,6 @@ export function ContactForm() {
       <Button type="submit" className="h-11 w-full text-sm" disabled={form.formState.isSubmitting}>
         {form.formState.isSubmitting ? "Sending..." : "Submit"}
       </Button>
-
-      {form.formState.isSubmitSuccessful ? (
-        <p className="text-muted-foreground text-xs">Message sent. Thank you.</p>
-      ) : null}
-      {form.formState.errors.root?.message ? (
-        <p className="text-destructive text-xs">{form.formState.errors.root.message}</p>
-      ) : null}
     </form>
   );
 }

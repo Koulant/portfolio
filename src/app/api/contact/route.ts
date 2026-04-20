@@ -1,3 +1,5 @@
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 import { NextResponse } from "next/server";
 
 type ContactPayload = {
@@ -13,8 +15,20 @@ const MESSAGE_MAX_LENGTH = 4000;
 const NAME_MAX_LENGTH = 100;
 const EMAIL_MAX_LENGTH = 254;
 
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(1, "24 h"),
+  prefix: "contact",
+});
+
 function asTrimmedString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function getClientIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return request.headers.get("x-real-ip") ?? "anonymous";
 }
 
 export async function POST(request: Request) {
@@ -27,6 +41,16 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: "Contact form is not configured on the server." },
       { status: 500 }
+    );
+  }
+
+  const ip = getClientIp(request);
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "You've already sent a message today. Please try again tomorrow." },
+      { status: 429 }
     );
   }
 
@@ -83,6 +107,7 @@ export async function POST(request: Request) {
   });
 
   if (!resendResponse.ok) {
+    console.error("Resend error:", await resendResponse.json());
     return NextResponse.json(
       { error: "Failed to send message. Please try again later." },
       { status: 502 }
