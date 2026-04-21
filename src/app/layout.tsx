@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Anton Koulikov",
   },
   description:
-    "Software engineer focused on building reliable backend systems and practical full-stack software.",
+    "Software engineer focused on reliable backend systems and full-stack software delivery. Previously at Newton Crypto building fintech systems.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Anton Koulikov",
     description:
-      "Software engineer focused on building reliable backend systems and practical full-stack software.",
+      "Software engineer focused on reliable backend systems and full-stack software delivery. Previously at Newton Crypto building fintech systems.",
     url: "https://koulant.com",
     siteName: "Anton Koulikov",
     type: "website",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Anton Koulikov",
     description:
-      "Software engineer focused on building reliable backend systems and practical full-stack software.",
+      "Software engineer focused on reliable backend systems and full-stack software delivery. Previously at Newton Crypto building fintech systems.",
   },
 };
 
