@@ -73,8 +73,14 @@ const stackSections = sourceSections.map((section) => {
   for (const tech of section.technologies) {
     if (!tech) continue;
     const normalized = tech.toLowerCase();
-    if (normalized.includes("react native")) { merge("react", "React", tech); continue; }
-    if (normalized.includes("firestore")) { merge("firebase", "Firebase", tech); continue; }
+    if (normalized.includes("react native")) {
+      merge("react", "React", tech);
+      continue;
+    }
+    if (normalized.includes("firestore")) {
+      merge("firebase", "Firebase", tech);
+      continue;
+    }
     merge(normalized, tech, tech);
   }
 
@@ -142,7 +148,9 @@ export default function HomePage() {
               />
             </div>
             <div className="min-w-0 flex-1 space-y-2 text-center sm:text-left">
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">{profile.name}</h1>
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+                {profile.name}
+              </h1>
               <RoleScroller roles={profile.roles} />
               <div className="text-muted-foreground flex flex-wrap items-center justify-center gap-3 text-sm leading-none sm:justify-start">
                 <Badge variant="secondary">
@@ -162,8 +170,8 @@ export default function HomePage() {
                 <Badge variant="secondary">
                   <span className="inline-flex h-5 w-5 items-center justify-center">
                     <span className="relative flex h-2 w-2">
-                      <span className="bg-green-500 absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
-                      <span className="bg-green-500 relative inline-flex h-2 w-2 rounded-full" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
                     </span>
                   </span>
                   <span className="leading-none">Open to work</span>

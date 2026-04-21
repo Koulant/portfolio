@@ -55,13 +55,17 @@ export function RoleScroller({ roles }: RoleScrollerProps) {
   }
 
   if (prefersReducedMotion) {
-    return <p className="text-muted-foreground h-8 w-full overflow-hidden text-base sm:text-xl">{safeRoles[index]}</p>;
+    return (
+      <p className="text-muted-foreground h-8 w-full overflow-hidden text-base sm:text-xl">
+        {safeRoles[index]}
+      </p>
+    );
   }
 
   return (
     <p className="text-muted-foreground relative h-8 w-full overflow-hidden text-base sm:text-xl">
       <span
-        className={`will-change-[opacity] transition-opacity duration-400 ease-in-out ${
+        className={`transition-opacity duration-400 ease-in-out will-change-[opacity] ${
           phase === "show" ? "opacity-100" : "opacity-0"
         }`}
       >
