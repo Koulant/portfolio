@@ -79,6 +79,6 @@ export const profile: Profile = {
     { href: "https://github.com/Koulant", label: "GitHub" },
     { href: "https://www.linkedin.com/in/antonkoulikov/", label: "LinkedIn" },
     { href: "mailto:antonk1337@gmail.com", label: "Email" },
-    { href: "/files/resume.pdf", label: "Resume" },
+    { href: "/files/anton-koulikov-resume.pdf", label: "Resume" },
   ],
 };
