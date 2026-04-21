@@ -42,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-background text-foreground antialiased">
+      <body className="bg-background text-foreground overflow-x-hidden antialiased">
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">
             <SiteHeader />

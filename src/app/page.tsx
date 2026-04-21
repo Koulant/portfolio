@@ -33,6 +33,59 @@ const SOCIAL_ICON_CLASS =
 const SOCIAL_ICON_CLASSNAME = "size-6 text-foreground/80 transition-colors";
 const SOCIAL_BRAND_ICON_CLASSNAME = "size-6 text-foreground/80 transition-colors fill-current";
 const SOCIAL_ICON_SIZE = 24;
+
+function isExternalHref(href: string) {
+  return href.startsWith("http") || href.startsWith("mailto:");
+}
+function isHttpHref(href: string) {
+  return href.startsWith("http");
+}
+function isStaticAssetHref(href: string) {
+  return href.startsWith("/") && /\.[a-z0-9]+$/i.test(href);
+}
+
+const orderedSocials = [...profile.socials].sort((a, b) => {
+  const priority = (label: string) => {
+    const normalized = label.toLowerCase();
+    if (normalized.includes("linkedin")) return 1;
+    if (normalized.includes("github")) return 2;
+    if (normalized.includes("email")) return 3;
+    if (normalized.includes("resume")) return 4;
+    return 5;
+  };
+  return priority(a.label) - priority(b.label);
+});
+
+const sourceSections = profile.techStackSections ?? [
+  { title: "Stack", technologies: profile.techStack },
+];
+const stackSections = sourceSections.map((section) => {
+  const grouped = new Map<string, { label: string; aliases: string[] }>();
+  const merge = (key: string, label: string, original: string) => {
+    const existing = grouped.get(key);
+    if (existing) {
+      if (!existing.aliases.includes(original)) existing.aliases.push(original);
+      return;
+    }
+    grouped.set(key, { label, aliases: [original] });
+  };
+
+  for (const tech of section.technologies) {
+    if (!tech) continue;
+    const normalized = tech.toLowerCase();
+    if (normalized.includes("react native")) {
+      merge("react", "React", tech);
+      continue;
+    }
+    if (normalized.includes("firestore")) {
+      merge("firebase", "Firebase", tech);
+      continue;
+    }
+    merge(normalized, tech, tech);
+  }
+
+  return { title: section.title, technologies: Array.from(grouped.values()) };
+});
 type BrandIcon = Omit<SimpleIcon, "license" | "guidelines" | "svg"> & { viewBox?: string };
 type SocialIconConfig = { type: "simple"; icon: BrandIcon } | { type: "svg"; node: ReactNode };
 
@@ -79,159 +132,109 @@ function getSocialIcon(label: string): SocialIconConfig {
 }
 
 export default function HomePage() {
-  const isExternalHref = (href: string) => href.startsWith("http") || href.startsWith("mailto:");
-  const isHttpHref = (href: string) => href.startsWith("http");
-  const isStaticAssetHref = (href: string) => href.startsWith("/") && /\.[a-z0-9]+$/i.test(href);
-  const orderedSocials = [...profile.socials].sort((a, b) => {
-    const priority = (label: string) => {
-      const normalized = label.toLowerCase();
-
-      if (normalized.includes("linkedin")) return 1;
-      if (normalized.includes("github")) return 2;
-      if (normalized.includes("email")) return 3;
-      if (normalized.includes("resume")) return 4;
-      return 4;
-    };
-
-    return priority(a.label) - priority(b.label);
-  });
-  const stackSections = (() => {
-    const sourceSections = profile.techStackSections ?? [
-      { title: "Stack", technologies: profile.techStack },
-    ];
-
-    return sourceSections.map((section) => {
-      const grouped = new Map<string, { label: string; aliases: string[] }>();
-      const merge = (key: string, label: string, original: string) => {
-        const existing = grouped.get(key);
-        if (existing) {
-          if (!existing.aliases.includes(original)) {
-            existing.aliases.push(original);
-          }
-          return;
-        }
-        grouped.set(key, { label, aliases: [original] });
-      };
-
-      for (const tech of section.technologies) {
-        if (!tech) continue;
-        const normalized = tech.toLowerCase();
-
-        if (normalized.includes("react native")) {
-          merge("react", "React", tech);
-          continue;
-        }
-        if (normalized.includes("firestore")) {
-          merge("firebase", "Firebase", tech);
-          continue;
-        }
-        merge(normalized, tech, tech);
-      }
-
-      return {
-        title: section.title,
-        technologies: Array.from(grouped.values()),
-      };
-    });
-  })();
-
   return (
     <section className="space-y-6 text-left">
       <Card>
-        <CardContent className="space-y-4 pt-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="flex flex-wrap items-end gap-4">
-              <div className="border-border relative h-28 w-28 shrink-0 overflow-hidden rounded-full border md:h-36 md:w-36">
-                <Image
-                  src={profile.portraitUrl}
-                  alt={`${profile.name} portrait`}
-                  fill
-                  sizes="(max-width: 768px) 112px, 144px"
-                  className="object-cover"
-                  priority
-                />
+        <CardContent className="pt-6">
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+            <div className="border-border relative h-32 w-32 shrink-0 overflow-hidden rounded-full border md:h-44 md:w-44">
+              <Image
+                src={profile.portraitUrl}
+                alt={`${profile.name} portrait`}
+                fill
+                sizes="(max-width: 768px) 128px, 176px"
+                className="object-cover"
+                priority
+              />
+            </div>
+            <div className="min-w-0 flex-1 space-y-2 text-center sm:text-left">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+                {profile.name}
+              </h1>
+              <RoleScroller roles={profile.roles} />
+              <div className="text-muted-foreground flex flex-wrap items-center justify-center gap-3 text-sm leading-none sm:justify-start">
+                <Badge variant="secondary">
+                  <span className="inline-flex h-5 w-5 items-center justify-center">
+                    <MapPin className="size-3.5" />
+                  </span>
+                  <span className="leading-none">{profile.location}</span>
+                </Badge>
+                <Badge variant="secondary">
+                  <span className="inline-flex h-5 w-5 items-center justify-center">
+                    <Clock3 className="size-3.5" />
+                  </span>
+                  <span className="leading-none">
+                    <CurrentTime timezone={profile.timezone} />
+                  </span>
+                </Badge>
+                <Badge variant="secondary">
+                  <span className="inline-flex h-5 w-5 items-center justify-center">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                    </span>
+                  </span>
+                  <span className="leading-none">Open to work</span>
+                </Badge>
               </div>
-              <div className="space-y-1">
-                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{profile.name}</h1>
-                <div className="text-muted-foreground text-lg">
-                  <RoleScroller roles={profile.roles} />
-                </div>
-                <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-sm leading-none">
-                  <Badge variant="secondary">
-                    <span className="inline-flex h-5 w-5 items-center justify-center">
-                      <MapPin className="size-3.5" />
-                    </span>
-                    <span className="leading-none">{profile.location}</span>
-                  </Badge>
-                  <Badge variant="secondary">
-                    <span className="inline-flex h-5 w-5 items-center justify-center">
-                      <Clock3 className="size-3.5" />
-                    </span>
-                    <span className="leading-none">
-                      <CurrentTime timezone={profile.timezone} />
-                    </span>
-                  </Badge>
-                </div>
+              <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
+                {orderedSocials.map((link) => {
+                  const socialIcon = getSocialIcon(link.label);
+                  const linkLabel = link.label;
+
+                  return (
+                    <Button
+                      asChild
+                      key={linkLabel}
+                      size="lg"
+                      variant="outline"
+                      className={SOCIAL_BUTTON_CLASS}
+                      aria-label={linkLabel}
+                    >
+                      {isExternalHref(link.href) || isStaticAssetHref(link.href) ? (
+                        <a
+                          href={link.href}
+                          target={isHttpHref(link.href) ? "_blank" : undefined}
+                          rel={isHttpHref(link.href) ? "noopener noreferrer" : undefined}
+                        >
+                          <span className={SOCIAL_ICON_CLASS}>
+                            {socialIcon.type === "simple" ? (
+                              <TechIcon
+                                icon={socialIcon.icon}
+                                width={SOCIAL_ICON_SIZE}
+                                height={SOCIAL_ICON_SIZE}
+                                className={SOCIAL_BRAND_ICON_CLASSNAME}
+                                monochrome
+                              />
+                            ) : (
+                              socialIcon.node
+                            )}
+                          </span>
+                          <span>{link.label}</span>
+                        </a>
+                      ) : (
+                        <Link href={link.href}>
+                          <span className={SOCIAL_ICON_CLASS}>
+                            {socialIcon.type === "simple" ? (
+                              <TechIcon
+                                icon={socialIcon.icon}
+                                width={SOCIAL_ICON_SIZE}
+                                height={SOCIAL_ICON_SIZE}
+                                className={SOCIAL_BRAND_ICON_CLASSNAME}
+                                monochrome
+                              />
+                            ) : (
+                              socialIcon.node
+                            )}
+                          </span>
+                          <span>{link.label}</span>
+                        </Link>
+                      )}
+                    </Button>
+                  );
+                })}
               </div>
             </div>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {orderedSocials.map((link) => {
-              const socialIcon = getSocialIcon(link.label);
-              const linkLabel = link.label;
-
-              return (
-                <Button
-                  asChild
-                  key={linkLabel}
-                  size="lg"
-                  variant="outline"
-                  className={SOCIAL_BUTTON_CLASS}
-                  aria-label={linkLabel}
-                >
-                  {isExternalHref(link.href) || isStaticAssetHref(link.href) ? (
-                    <a
-                      href={link.href}
-                      target={isHttpHref(link.href) ? "_blank" : undefined}
-                      rel={isHttpHref(link.href) ? "noopener noreferrer" : undefined}
-                    >
-                      <span className={SOCIAL_ICON_CLASS}>
-                        {socialIcon.type === "simple" ? (
-                          <TechIcon
-                            icon={socialIcon.icon}
-                            width={SOCIAL_ICON_SIZE}
-                            height={SOCIAL_ICON_SIZE}
-                            className={SOCIAL_BRAND_ICON_CLASSNAME}
-                            monochrome
-                          />
-                        ) : (
-                          socialIcon.node
-                        )}
-                      </span>
-                      <span>{link.label}</span>
-                    </a>
-                  ) : (
-                    <Link href={link.href}>
-                      <span className={SOCIAL_ICON_CLASS}>
-                        {socialIcon.type === "simple" ? (
-                          <TechIcon
-                            icon={socialIcon.icon}
-                            width={SOCIAL_ICON_SIZE}
-                            height={SOCIAL_ICON_SIZE}
-                            className={SOCIAL_BRAND_ICON_CLASSNAME}
-                            monochrome
-                          />
-                        ) : (
-                          socialIcon.node
-                        )}
-                      </span>
-                      <span>{link.label}</span>
-                    </Link>
-                  )}
-                </Button>
-              );
-            })}
           </div>
         </CardContent>
       </Card>

@@ -33,7 +33,7 @@ export function SiteLinks({ links, activePath, variant }: SiteLinksProps) {
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    "rounded-md px-2 py-2 text-sm font-medium transition-colors sm:px-3",
                     isActive
                       ? "text-foreground dark:text-foreground bg-zinc-100 font-semibold dark:bg-zinc-800/70"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
