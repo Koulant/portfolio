@@ -1,2 +1,0 @@
-$content = Get-Content -Path src/app/projects/page.tsx -Raw
-$content
